@@ -2,7 +2,13 @@
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		extend: {}
+		extend: {
+			colors: {
+				amogus: '#00FFFF',
+				brack: '#28282B',
+				bracker: '#000000'
+			}
+		}
 	},
 	plugins: []
 };

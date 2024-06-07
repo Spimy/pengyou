@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 
 interface IDaily {
 	userId: string;
@@ -25,4 +25,4 @@ const dailyLoginSchema = new Schema<IDaily>(
 	{ timestamps: { createdAt: true } }
 ).index({ createdAt: 1 }, { expireAfterSeconds: getExpirationSeconds() });
 
-export const Daily = model<IDaily>('dailies', dailyLoginSchema);
+export const Daily = mongoose.models.dailies || model<IDaily>('dailies', dailyLoginSchema);

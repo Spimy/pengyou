@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 
 interface IPenguin {
 	happiness: number;
@@ -14,4 +14,4 @@ const penguinSchema = new Schema<IPenguin>({
 	ownerId: { type: String, required: true }
 });
 
-export const Penguin = model<IPenguin>('penguins', penguinSchema);
+export const Penguin = mongoose.models.penguins || model<IPenguin>('penguins', penguinSchema);

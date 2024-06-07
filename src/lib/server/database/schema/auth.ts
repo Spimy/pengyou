@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 
 interface IUser {
 	_id: string;
@@ -38,5 +38,5 @@ const sessionSchema = new Schema<ISession>(
 	{ _id: false }
 );
 
-export const User = model<IUser>('users', userSchema);
-export const Session = model<ISession>('sessions', sessionSchema);
+export const User = mongoose.models.users || model<IUser>('users', userSchema);
+export const Session = mongoose.models.sessions || model<ISession>('sessions', sessionSchema);

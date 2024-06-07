@@ -1,5 +1,5 @@
 import { ITransactionType } from '$lib/utils';
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 
 interface ITransactions {
 	title: string;
@@ -19,4 +19,5 @@ const transactionsSchema = new Schema<ITransactions>({
 	created_at: { type: Date, required: true, default: () => Date.now() }
 } as const);
 
-export const Transaction = model<ITransactions>('transactions', transactionsSchema);
+export const Transaction =
+	mongoose.models.transactions || model<ITransactions>('transactions', transactionsSchema);

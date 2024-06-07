@@ -31,15 +31,11 @@ export const actions = {
 
 		let category: string | undefined = undefined;
 		if (transactionType === ITransactionType.EXPENSE) {
-			console.log('test');
 			const categoryRes = await jsonModel.generateContent(
 				`${title} ${user.currency} ${amount}, ${new Date().toDateString()}. Based on this expense, choose the category of this expense based the following list: Entertainment, Food & Beverage, Transport, Rent, Utility Bills, Miscellaneous. Output in the format: {expenseCategory: string}`
 			);
-			console.log(categoryRes.response.text());
 			category = JSON.parse(categoryRes.response.text()).expenseCategory;
 		}
-
-		console.log(category, 'category');
 
 		await Transaction.create({
 			title,
@@ -48,7 +44,5 @@ export const actions = {
 			category: category,
 			userId: user.id
 		});
-
-		console.log(category, 'category2');
 	}
 } satisfies Actions;

@@ -13,3 +13,8 @@ export const hashConfig = {
 	outputLen: 32,
 	parallelism: 1
 };
+
+export enum ITransactionType {
+	INCOME = 'income',
+	EXPENSE = 'expense'
+}

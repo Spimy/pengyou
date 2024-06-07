@@ -47,7 +47,8 @@ export const actions = {
 			_id: userId,
 			email,
 			username,
-			hashed_password: hashedPassword
+			hashed_password: hashedPassword,
+			currency: 'MYR'
 		});
 
 		const session = await lucia.createSession(userId, {});

@@ -1,9 +1,11 @@
 import { lucia } from '$lib/server/auth';
 import { User } from '$lib/server/database/schema/auth';
+import { Penguin } from '$lib/server/database/schema/penguin';
 import { hashConfig, isValidEmail, isValidPassword } from '$lib/utils';
 import { hash } from '@node-rs/argon2';
 import { fail, redirect } from '@sveltejs/kit';
 import { generateIdFromEntropySize } from 'lucia';
+import mongoose from 'mongoose';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {};
@@ -43,12 +45,18 @@ export const actions = {
 		const userId = generateIdFromEntropySize(10); // 16 characters long
 		const hashedPassword = await hash(password, hashConfig);
 
-		await User.create({
-			_id: userId,
-			email,
-			username,
-			hashed_password: hashedPassword,
-			currency: 'MYR'
+		const mongoSession = await mongoose.startSession();
+
+		await mongoSession.withTransaction(async () => {
+			await User.create({
+				_id: userId,
+				email,
+				username,
+				hashed_password: hashedPassword,
+				currency: 'MYR'
+			});
+
+			await Penguin.create({ ownerId: userId });
 		});
 
 		const session = await lucia.createSession(userId, {});

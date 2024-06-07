@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 import { MongodbAdapter } from '@lucia-auth/adapter-mongodb';
-import { Lucia } from 'lucia';
+import { Lucia, TimeSpan } from 'lucia';
 import mongoose from 'mongoose';
 
 const adapter = new MongodbAdapter(
@@ -15,11 +15,14 @@ export const lucia = new Lucia(adapter, {
 			secure: !dev
 		}
 	},
+	sessionExpiresIn: new TimeSpan(1, 'd'),
 	getUserAttributes: (attributes) => {
 		return {
 			username: attributes.username,
 			email: attributes.email,
-			currency: attributes.currency
+			currency: attributes.currency,
+			monthlyBudget: attributes.monthlyBudget,
+			penguCoins: attributes.penguCoins
 		};
 	}
 });
@@ -31,6 +34,8 @@ declare module 'lucia' {
 			username: string;
 			email: string;
 			currency: string;
+			monthlyBudget: number;
+			penguCoins: number;
 		};
 	}
 }

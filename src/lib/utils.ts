@@ -18,3 +18,5 @@ export enum ITransactionType {
 	INCOME = 'income',
 	EXPENSE = 'expense'
 }
+
+export const PENGUCOINS_PER_COMMISSION = 10;

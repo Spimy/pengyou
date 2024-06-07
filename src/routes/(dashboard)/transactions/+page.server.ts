@@ -1,6 +1,8 @@
+import { User } from '$lib/server/database/schema/auth';
+import { Daily } from '$lib/server/database/schema/dailies';
 import { Transaction } from '$lib/server/database/schema/transactions';
 import { jsonModel } from '$lib/server/gemini';
-import { ITransactionType } from '$lib/utils';
+import { ITransactionType, PENGUCOINS_PER_COMMISSION } from '$lib/utils';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -44,5 +46,17 @@ export const actions = {
 			category: category,
 			userId: user.id
 		});
+
+		// Add PenguCoins to user as daily commission
+		const daily = await Daily.findOne({ userId: user.id }).exec();
+		if (!daily || daily.addedTransaction) return;
+
+		daily.addedTransaction = true;
+		await daily.save();
+
+		await User.updateOne(
+			{ _id: user.id },
+			{ penguCoins: user.penguCoins + PENGUCOINS_PER_COMMISSION }
+		);
 	}
 } satisfies Actions;

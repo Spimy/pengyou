@@ -5,6 +5,7 @@
 </script>
 
 <h1>Authenticated as {data.user.username}</h1>
+<p class="">Tip from Pengyou: <b>{data.tip}</b></p>
 
 <form action="/?/logout" method="POST" use:enhance>
 	<button class="" type="submit">Logout</button>

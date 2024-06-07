@@ -7,6 +7,7 @@ interface IUser {
 	hashed_password: string;
 	currency: string;
 	monthlyBudget?: number;
+	penguCoins?: number;
 }
 
 const userSchema = new Schema<IUser>(
@@ -16,7 +17,8 @@ const userSchema = new Schema<IUser>(
 		email: { type: String, required: true, unique: true },
 		hashed_password: { type: String, required: true },
 		currency: { type: String, required: true },
-		monthlyBudget: { type: Number, required: true, default: 0 }
+		monthlyBudget: { type: Number, required: true, default: 0 },
+		penguCoins: { type: Number, required: true, default: 0 }
 	} as const,
 	{ _id: false }
 );

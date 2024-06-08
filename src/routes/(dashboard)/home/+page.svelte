@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import ExpensesChartcopy from '$lib/components/TransactionChart.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import PengYou from '$lib/components/PengYou.svelte';
 	import TypeOfExpenses from '$lib/components/TypeOfExpenses.svelte';
 	import type { SubmitFunction } from './$types.js';
+	import TransactionChart from '$lib/components/TransactionChart.svelte';
 
 	export let data;
 
@@ -168,7 +170,13 @@
 </Modal>
 <a class="absolute top-[65vh] left-[50vw] p-5 bg-red-500 rounded-xl shadow-[-5px_5px_0px_-1px_rgba(201,32,29,100%)]" href="#transaction"> Add Transaction </a>
 
-<div class="bg-brack p-4 pb-28 rounded-t-3xl space-y-2 min-h-[60vh]">test</div>
+<div class="bg-brack p-4 pb-28 rounded-t-3xl space-y-2 min-h-[60vh]">
+	<h1 class="text-primary text-2xl">Dashboard</h1>
+	<div>
+		<div class="glassEffect">Budget this month</div> 
+		<TransactionChart transactions={data.transactions}></TransactionChart>
+		<h1 class="text-primary text-2xl">Missions</h1>
+</div></div>
 
 <form action="/?/logout" method="POST" use:enhance>
 	<button class="" type="submit">Logout</button>

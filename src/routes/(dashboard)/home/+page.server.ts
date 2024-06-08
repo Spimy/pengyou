@@ -87,7 +87,9 @@ export const load: PageServerLoad = async ({ locals }) => {
 	}));
 	const inventory = { foods, items, backgrounds };
 
-	return { user, tip, inventory };
+	const transactionz = await Transaction.find({ userId: user.id }).lean().exec();
+
+	return { user, tip, inventory,transactions: transactionz.map((t) => ({ ...t, _id: t._id.toHexString() })) };
 };
 
 export const actions = {

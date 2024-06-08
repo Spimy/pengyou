@@ -45,7 +45,7 @@
 					}
 				},
 				title: {
-					text: 'Balance',
+					text: 'Transactions',
 					style: {
 						color: '#FFFFFF'
 					}

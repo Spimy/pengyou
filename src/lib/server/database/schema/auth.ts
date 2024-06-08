@@ -18,6 +18,8 @@ interface IUser {
 	hashed_password: string;
 	currency: string;
 	monthlyBudget?: number;
+	monthlyIncome?: number;
+	dailyExpenses?: number;
 	penguCoins?: number;
 	inventory: Inventory;
 }
@@ -30,6 +32,8 @@ const userSchema = new Schema<IUser>(
 		hashed_password: { type: String, required: true },
 		currency: { type: String, required: true },
 		monthlyBudget: { type: Number, required: true, default: 0 },
+		monthlyIncome: { type: Number, required: true, default: 0 },
+		dailyExpenses: { type: Number, required: true, default: 0 },
 		penguCoins: { type: Number, required: true, default: 0 },
 		inventory: {
 			foods: [

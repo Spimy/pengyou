@@ -2,33 +2,44 @@
 	import { enhance } from '$app/forms';
 </script>
 
-<div class="flex min-h-screen w-full items-center justify-center bg-amogus px-4">
+<div
+	class="flex min-h-screen w-full items-center justify-center bg-gradient-to-b from-sky-300 to-white-300 px-4"
+>
 	<div class="flex w-[500px] max-w-3xl flex-col rounded-xl bg-brack py-12 px-6 text-slate-200">
-		<h1 class="text-come text-center text-5xl">Register</h1>
+		<p class="mb-4 text-center text-5xl">Register</p>
+		<div class="flex flex-row items-center mb-10">
+			<img class="w-24 h-24" src="./confused-default.png" alt="" />
+			<p class="text-center text-xl"><br />PengYou is excited to get to know you!</p>
+		</div>
+
 		<div>
 			<div class="w-full">
-				<form method="POST" class="shadow-md rounded px-8 pt-6 pb-8 mb-4" use:enhance>
-					<div class="mb-6">
-						<label class="text-sm font-bold mb-2" for="username"> Username </label>
-						<input
-							class="shadow appearance-none border black rounded-3xl w-full py-2 px-3 bg-bracker mb-3 leading-tight focus:outline-none focus:shadow-outline"
-							id="username"
-							type="text"
-							name="username"
-						/>
-						<div class="mb-4">
-							<label class="text-come text-sm font-bold mb-2" for="email"> E-mail </label>
+				<form method="POST" use:enhance>
+					<div class="">
+						<div class="">
+							<label for="username" class="inline-block text-xl font-bold mb-4 ml-2">Username</label
+							>
 							<input
-								class="shadow appearance-none border rounded-3xl w-full py-2 px-3 bg-bracker leading-tight focus:outline-none focus:shadow-outline"
+								class="glassEffect shadow appearance-none border-none rounded-3xl w-full py-2 px-3 mb-8 leading-tight focus:outline-none focus:outline-sky-500"
+								id="username"
+								type="text"
+								name="username"
+							/>
+						</div>
+						<div class="">
+							<label for="email" class="inline-block text-xl font-bold mb-4 ml-2">Email</label>
+							<input
+								class="glassEffect shadow appearance-none border-none rounded-3xl w-full py-2 px-3 mb-8 leading-tight focus:outline-none focus:outline-sky-500"
 								id="email"
 								type="text"
 								name="email"
 							/>
 						</div>
-						<div class="mb-6">
-							<label class="text-come text-sm font-bold mb-2" for="password"> Password </label>
+						<div class="">
+							<label for="password" class="inline-block text-xl font-bold mb-4 ml-2">Password</label
+							>
 							<input
-								class="shadow appearance-none border black rounded-3xl w-full py-2 px-3 bg-bracker mb-3 leading-tight focus:outline-none focus:shadow-outline"
+								class="glassEffect shadow appearance-none border-none rounded-3xl w-full py-2 px-3 mb-8 leading-tight focus:outline-none focus:outline-sky-500"
 								id="password"
 								type="password"
 								name="password"
@@ -37,7 +48,7 @@
 
 						<div class="flex items-center justify-between text-center">
 							<button
-								class="bg-amogus text-white font-bold py-2 px-4 rounded-3xl focus:outline-none focus:shadow-outline w-full"
+								class="shadow-[-8px_8px_0px_-1px_rgba(0,0,0,1)] shadow-blue-700 hover:border-blue-500 transition ease-in-out delay-70 bg-primary hover:translate-y-1px active:translate-y-8 hover:scale-110 hover:bg-sky-500 duration-300 text-white font-bold py-2 px-4 rounded-3xl focus:outline-none focus:shadow-outline w-4/5 mx-auto"
 								type="submit"
 							>
 								Register

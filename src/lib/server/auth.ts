@@ -22,6 +22,8 @@ export const lucia = new Lucia(adapter, {
 			email: attributes.email,
 			currency: attributes.currency,
 			monthlyBudget: attributes.monthlyBudget,
+			monthlyIncome: attributes.monthlyIncome,
+			dailyExpenses: attributes.dailyExpenses,
 			penguCoins: attributes.penguCoins,
 			inventory: attributes.inventory
 		};
@@ -36,6 +38,8 @@ declare module 'lucia' {
 			email: string;
 			currency: string;
 			monthlyBudget: number;
+			monthlyIncome: number;
+			dailyExpenses: number;
 			penguCoins: number;
 			inventory: {
 				foods: { id: string; amount: number }[];

@@ -2,9 +2,9 @@ import { User } from '$lib/server/database/schema/auth';
 import { Daily } from '$lib/server/database/schema/dailies';
 import { Penguin } from '$lib/server/database/schema/penguin';
 import { Transaction } from '$lib/server/database/schema/transactions';
-import { textModel } from '$lib/server/gemini';
+import { jsonModel, textModel } from '$lib/server/gemini';
 import { PENGUCOINS_PER_COMMISSION, storeItems } from '$lib/utils';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -29,27 +29,39 @@ export const load: PageServerLoad = async ({ locals }) => {
 			title: t.title,
 			amount: t.amount,
 			transactionType: t.transactionType,
-			category: t.category
+			category: t.category,
+			date: t.created_at
 		};
 	});
 
 	let tip: string | undefined = undefined;
 	try {
+		const defaultPrompt = `Max budget per month: ${user.currency} ${user.monthlyBudget}. My monthly income: ${user.currency} ${user.monthlyIncome}. My guesstimated daily expense: ${user.currency} ${user.dailyExpenses}. List of transactions for the past week: ${JSON.stringify(formattedTransactions)}\n\n`;
 		const tipResponse = await textModel.generateContent(
-			`Max budget per month: ${user.currency} ${user.monthlyBudget}. List of transactions for the past week: ${JSON.stringify(formattedTransactions)}\n\nBased on those transactions, provide a short tip of about 40 words to improve spending habits and to better manage expenses, as a virtual pet penguin called Pengyou. Pengyou speaks in third person. Use a cutesy and happy tone while being very educational. Try playing into empathy.`
+			`${defaultPrompt}Based on those transactions, provide a short tip of about 40 words to improve spending habits and to better manage expenses, as a virtual pet penguin called Pengyou. Pengyou speaks in third person. Use a cutesy and happy tone while being very educational. Try playing into empathy.`
 		);
-		tip = tipResponse.response.text() as string;
+		tip = `${tipResponse.response.text()}`;
+
+		const newUser = (await User.findOne({ _id: user.id }).exec())!;
+
+		if (formattedTransactions.length > 0) {
+			const newDailyExpenseResponse = await jsonModel.generateContent(
+				`${defaultPrompt}Based on those transactions, calculate an average daily expense. Generate the data in the format: {dailyExpense: number}`
+			);
+			const newDailyExpense = JSON.parse(newDailyExpenseResponse.response.text()).dailyExpense;
+			newUser.dailyExpenses = newDailyExpense;
+			tip += `Your newly calculated daily expense is ${user.currency} ${newDailyExpense}`;
+		}
 
 		const daily = await Daily.findOne({ userId: user.id }).exec();
-
 		if (daily && !daily.readAiTip) {
 			daily.readAiTip = true;
 			await daily.save();
 
-			const newUser = (await User.findOne({ _id: user.id }).exec())!;
 			newUser.penguCoins = newUser.penguCoins! + PENGUCOINS_PER_COMMISSION;
-			await newUser.save();
 		}
+
+		await newUser.save();
 	} catch {}
 
 	const foods = user.inventory.foods.map((f) => ({
@@ -89,7 +101,6 @@ export const actions = {
 		newUser.inventory[itemType][index].amount -= 1;
 
 		await penguin.save();
-		await newUser.save();
 
 		if (itemType === 'foods') {
 			const daily = await Daily.findOne({ userId: user.id }).exec();
@@ -100,6 +111,10 @@ export const actions = {
 				newUser.penguCoins = newUser.penguCoins! + PENGUCOINS_PER_COMMISSION;
 				await newUser.save();
 			}
+		} else {
+			await newUser.save();
 		}
+
+		return redirect(302, '/transaction');
 	}
 } satisfies Actions;

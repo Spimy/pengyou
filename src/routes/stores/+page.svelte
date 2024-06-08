@@ -1,21 +1,20 @@
 <script>
 	import { enhance } from '$app/forms';
-
-	export let data;
+	import { storeItems } from '$lib/utils';
 </script>
 
 <form
-	class="pt-20 mb-20 flex min-h-screen min-w-fit items-center justify-center bg-gradient-to-b from-sky-300 to-white-300 px-1.5"
+	class="py-10 flex min-h-screen w-screen items-center justify-center bg-gradient-to-b from-sky-300 to-white-300 px-1.5"
 	method="POST"
 	use:enhance
 >
-	<div class="flex max-w-screen flex-col rounded-xl bg-brack py-12 px-5 text-slate-200">
+	<div class="flex max-w-screen flex-col rounded-xl bg-brack py-12 px-3 text-slate-200">
 		<h1 class="text-center font-bold text-4xl">PengYou Store</h1>
 		<img class="w-28 h-28 mx-auto my-5" src="casual-penguin.png" alt="PengYou" title="Mr.PengYou" />
 		<br />
 		<h1 class="text-center font-bold text-2xl">Food</h1>
 		<div class="flex flex-row flex-wrap">
-			{#each data.storeItems.foods as food}
+			{#each storeItems.foods as food}
 				<button
 					type="submit"
 					formaction="?/store&item={food.id}&type=foods"
@@ -29,7 +28,7 @@
 		</div>
 		<h1 class="text-center font-bold text-2xl">Items</h1>
 		<div class="flex flex-row flex-wrap">
-			{#each data.storeItems.items as item}
+			{#each storeItems.items as item}
 				<button
 					formaction="?/store&item={item.id}&type=items"
 					disabled={item.cost === 0}
@@ -42,7 +41,7 @@
 		</div>
 		<h1 class="text-center font-bold text-2xl">Backgrounds</h1>
 		<div class="flex flex-row flex-wrap">
-			{#each data.storeItems.backgrounds as background}
+			{#each storeItems.backgrounds as background}
 				<button
 					formaction="?/store&item={background.id}&type=backgrounds"
 					disabled={background.cost === 0}

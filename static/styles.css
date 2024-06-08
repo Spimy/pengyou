@@ -1,3 +1,15 @@
+@font-face {
+	font-family: 'PixeloidSans';
+	src: url('/font/PixeloidSans.ttf');
+}
+
 :root {
-	--color-text: rgb(59, 0, 208);
+	font-family: monospace;
+	font-family: 'PixeloidSans';
+}
+
+.glassEffect {
+	background: #00000084;
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
 }

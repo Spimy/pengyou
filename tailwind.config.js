@@ -5,8 +5,9 @@ export default {
 		extend: {
 			colors: {
 				amogus: '#00FFFF',
-				brack: '#28282B',
-				bracker: '#000000'
+				brack: '#141414',
+				bracker: '#000000',
+				primary: '#3ec9ff'
 			}
 		}
 	},

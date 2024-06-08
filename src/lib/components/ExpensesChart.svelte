@@ -13,6 +13,7 @@
 	}[];
 
 	const options = {
+
 		chart: {
 			type: 'line'
 		},
@@ -51,12 +52,12 @@
 						colors: '#FFFFFF'
 					}
 				},
-				title: {
-					text: 'Balance',
-					style: {
-						color: '#FFFFFF'
-					}
-				}
+				// title: {
+				// 	text: 'Balance',
+				// 	style: {
+				// 		color: '#FFFFFF'
+				// 	}
+				// }
 			}
 		],
 		xaxis: {
@@ -68,8 +69,9 @@
 				color: '#FFFFFF'
 			},
 			labels: {
+				show: false,
 				style: {
-					colors: '#FFFFFF'
+					show: false,
 				}
 			}
 		}

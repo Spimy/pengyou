@@ -43,10 +43,10 @@ export const load: PageServerLoad = async ({ locals }) => {
 		if (daily && !daily.readAiTip) {
 			daily.readAiTip = true;
 			await daily.save();
-			await User.updateOne(
-				{ _id: user.id },
-				{ penguCoins: user.penguCoins + PENGUCOINS_PER_COMMISSION }
-			);
+
+			const newUser = (await User.findOne({ _id: user.id }).exec())!;
+			newUser.penguCoins = newUser.penguCoins! + PENGUCOINS_PER_COMMISSION;
+			await newUser.save();
 		}
 	} catch {}
 

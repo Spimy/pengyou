@@ -25,12 +25,14 @@ export const PENGUCOINS_PER_COMMISSION = 10;
 // ! Realistically will be in database
 export const storeItems = {
 	foods: [
-		{ id: 'fish', name: 'Fish', cost: 20, hungerRefill: 10 },
-		{ id: 'ice-cream', name: 'Ice Cream', cost: 20, hungerRefill: 5 }
+		{ id: 'fish', name: 'Fish', cost: 20, hungerRefill: 10, happinessRefill: 0 },
+		{ id: 'ice-cream', name: 'Ice Cream', cost: 20, hungerRefill: 5, happinessRefill: 0 }
 	],
-	items: [{ id: 'golden-spoon', name: 'Golden Spoon', cost: 0, happinessRefill: 15 }],
+	items: [
+		{ id: 'golden-spoon', name: 'Golden Spoon', cost: 0, hungerRefill: 0, happinessRefill: 15 }
+	],
 	backgrounds: [
-		{ id: 'snowy', name: 'Snowy', cost: 0 },
-		{ id: 'beach', name: 'Beach', cost: 160 }
+		{ id: 'snowy', name: 'Snowy', cost: 0, hungerRefill: 0, happinessRefill: 0 },
+		{ id: 'beach', name: 'Beach', cost: 160, hungerRefill: 0, happinessRefill: 0 }
 	]
 };

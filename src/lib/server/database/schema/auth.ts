@@ -1,4 +1,15 @@
-import mongoose, { model, Schema } from 'mongoose';
+import mongoose, { Model, model, Schema } from 'mongoose';
+
+interface Item {
+	id: string;
+	amount: number;
+}
+
+interface Inventory {
+	foods: Item[];
+	items: Item[];
+	backgrounds: Item[];
+}
 
 interface IUser {
 	_id: string;
@@ -8,6 +19,7 @@ interface IUser {
 	currency: string;
 	monthlyBudget?: number;
 	penguCoins?: number;
+	inventory: Inventory;
 }
 
 const userSchema = new Schema<IUser>(
@@ -18,7 +30,27 @@ const userSchema = new Schema<IUser>(
 		hashed_password: { type: String, required: true },
 		currency: { type: String, required: true },
 		monthlyBudget: { type: Number, required: true, default: 0 },
-		penguCoins: { type: Number, required: true, default: 0 }
+		penguCoins: { type: Number, required: true, default: 0 },
+		inventory: {
+			foods: [
+				{
+					id: { type: String, required: true },
+					amount: { type: Number, required: true }
+				}
+			],
+			items: [
+				{
+					id: { type: String, required: true },
+					amount: { type: Number, required: true }
+				}
+			],
+			backgrounds: [
+				{
+					id: { type: String, required: true },
+					amount: { type: Number, required: true }
+				}
+			]
+		}
 	} as const,
 	{ _id: false }
 );
@@ -38,5 +70,6 @@ const sessionSchema = new Schema<ISession>(
 	{ _id: false }
 );
 
-export const User = mongoose.models.users || model<IUser>('users', userSchema);
-export const Session = mongoose.models.sessions || model<ISession>('sessions', sessionSchema);
+export const User = (mongoose.models.users as Model<IUser>) || model<IUser>('users', userSchema);
+export const Session =
+	(mongoose.models.sessions as Model<ISession>) || model<ISession>('sessions', sessionSchema);

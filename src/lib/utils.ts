@@ -20,3 +20,17 @@ export enum ITransactionType {
 }
 
 export const PENGUCOINS_PER_COMMISSION = 10;
+
+// ! Hardcoding the store because it will not change for the sake of the hackathon
+// ! Realistically will be in database
+export const storeItems = {
+	food: [
+		{ id: 'fish', name: 'Fish', cost: 20, hungerRefill: 10 },
+		{ id: 'ice-cream', name: 'Ice Cream', cost: 20, hungerRefill: 5 }
+	],
+	items: [{ id: 'golden-spoon', name: 'Golden Spoon', cost: 0, happinessRefill: 15 }],
+	backgrounds: [
+		{ id: 'snowy', name: 'Snowy', cost: 0 },
+		{ id: 'beach', name: 'Beach', cost: 160 }
+	]
+};

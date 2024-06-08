@@ -131,6 +131,15 @@
 			>Add</button
 		>
 	</form>
+
+	<form class="pt-32"  method="POST" action="?/ocr" enctype="multipart/form-data" use:enhance>
+		<label for="receipt">Receipt</label>
+		<input type="file" name="receipt" id="receipt" />
+	
+		<input type="text" name="test" id="test" />
+		<button type="submit" class="p-5 bg-red-500">Upload</button>
+	</form>
+	
 </Modal>
 <a class="absolute top-[65vh] left-[50vw] p-5 bg-red-500 rounded-xl shadow-[-5px_5px_0px_-1px_rgba(201,32,29,100%)]" href="#transaction"> Add Transaction </a>
 

@@ -44,7 +44,7 @@
 				<path d="M9.00229 17.335H7.59631V18.665H9.00229V17.335Z" />
 				<path d="M7.59631 18.665H6.19952V19.995H7.59631V18.665Z" />
 			</svg>
-			<label class="text-[8px]">Home</label>
+			<p class="text-[8px]">Home</p>
 
 			<div
 				class="{$page.url.pathname == '/home'
@@ -104,7 +104,7 @@
 				<path d="M1.47012 9.88806H0V18.1119H1.47012V9.88806Z" />
 			</svg>
 
-			<label class="text-[8px] text-center">Transactions</label>
+			<p class="text-[8px] text-center">Transactions</p>
 
 			<div
 				class="{$page.url.pathname == '/transactions'
@@ -150,7 +150,7 @@
 				<path d="M4.57504 4.57001H3.04504V6.10001H4.57504V4.57001Z" />
 			</svg>
 
-			<label class="text-[8px]">Store</label>
+			<p class="text-[8px]">Store</p>
 
 			<div
 				class="{$page.url.pathname == '/store'

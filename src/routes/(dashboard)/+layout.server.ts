@@ -1,11 +1,13 @@
 import { User } from '$lib/server/database/schema/auth';
 import { Daily } from '$lib/server/database/schema/dailies';
 import { PENGUCOINS_PER_COMMISSION } from '$lib/utils';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals }) => {
-	if (!locals.user || !locals.session) throw error(401, 'You are not authenticated.');
+		if (!locals.user || !locals.session) throw redirect(301, '/register');
+
+	// if (!locals.user || !locals.session) throw error(401, 'You are not authenticated.');
 
 	/**
 	 * Henceforth, the user is considered authenticated.

@@ -89,7 +89,9 @@
 		</section>
 	</form>
 </Modal>
-<a class="absolute top-[65vh] p-5 bg-red-500 rounded-xl" href="#inventory">Open Inventory</a>
+<a class="absolute top-[65vh] left-[20vw] p-5 bg-red-500 rounded-xl" href="#inventory"
+	>Open Inventory</a
+>
 
 <Modal id="transaction" title="Add Transaction">
 	<form class="grid gap-2" action="/transactions/?/addTransaction" method="POST" use:enhance>

@@ -34,7 +34,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	let tip: string | undefined = undefined;
 	try {
 		const tipResponse = await textModel.generateContent(
-			`Max budget per month: ${user.currency} ${user.monthlyBudget}. List of transactions for the past week: ${formattedTransactions}\n\nBased on those transactions, provide a short tip of about 40 words to improve spending habits and to better manage expenses, on behalf of a virtual pet penguin called Pengyou. Use a cutesy and happy tone while being very educational. Try playing into empathy.`
+			`Max budget per month: ${user.currency} ${user.monthlyBudget}. List of transactions for the past week: ${JSON.stringify(formattedTransactions)}\n\nBased on those transactions, provide a short tip of about 40 words to improve spending habits and to better manage expenses, as a virtual pet penguin called Pengyou. Pengyou speaks in third person. Use a cutesy and happy tone while being very educational. Try playing into empathy.`
 		);
 		tip = tipResponse.response.text() as string;
 

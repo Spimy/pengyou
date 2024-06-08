@@ -44,12 +44,19 @@
 
 <div class="relative">
 	<PengYou />
+
 	<div
 		class="absolute top-20 left-2/4 w-80 -translate-x-2/4 bg-white p-5 rounded-3xl shadow-[-8px_8px_0px_-1px_rgba(5,76,214,25%)]"
 	>
 		<h1 class="font-black text-2xl">Pengyou's thoughts:</h1>
+		{#if data.tip}
 		<p class="mt-2">{data.tip}</p>
+		{:else}
+		<p class="mt-2">Pengyou is very excited to get to know you!</p>
+		{/if}
+
 	</div>
+
 </div>
 
 <Modal id="inventory" title="Inventory">
@@ -89,7 +96,7 @@
 		</section>
 	</form>
 </Modal>
-<a class="absolute top-[65vh] left-[20vw] p-5 bg-red-500 rounded-xl" href="#inventory"
+<a class="absolute top-[65vh] left-[5vw] p-5 bg-yellow-200 rounded-xl shadow-[-5px_5px_0px_-1px_rgba(255,222,0,100%)]" href="#inventory"
 	>Open Inventory</a
 >
 
@@ -125,7 +132,7 @@
 		>
 	</form>
 </Modal>
-<a class="inline-block p-5 bg-red-500 rounded-xl" href="#transaction">Add Transaction</a>
+<a class="absolute top-[65vh] left-[50vw] p-5 bg-red-500 rounded-xl shadow-[-5px_5px_0px_-1px_rgba(201,32,29,100%)]" href="#transaction"> Add Transaction </a>
 
 <div class="bg-brack p-4 pb-28 rounded-t-3xl space-y-2 min-h-[60vh]">test</div>
 

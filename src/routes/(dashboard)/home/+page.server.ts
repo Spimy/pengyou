@@ -1,9 +1,11 @@
 import { User } from '$lib/server/database/schema/auth';
 import { Daily } from '$lib/server/database/schema/dailies';
+import { Penguin } from '$lib/server/database/schema/penguin';
 import { Transaction } from '$lib/server/database/schema/transactions';
 import { textModel } from '$lib/server/gemini';
-import { PENGUCOINS_PER_COMMISSION } from '$lib/utils';
-import type { PageServerLoad } from './$types';
+import { PENGUCOINS_PER_COMMISSION, storeItems } from '$lib/utils';
+import { fail } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const user = locals.user!;
@@ -50,5 +52,54 @@ export const load: PageServerLoad = async ({ locals }) => {
 		}
 	} catch {}
 
-	return { user, tip };
+	const foods = user.inventory.foods.map((f) => ({
+		...f,
+		name: storeItems.foods.find((fs) => fs.id === f.id)!.name
+	}));
+	const items = user.inventory.items.map((f) => ({
+		...f,
+		name: storeItems.items.find((fs) => fs.id === f.id)!.name
+	}));
+	const backgrounds = user.inventory.backgrounds.map((f) => ({
+		...f,
+		name: storeItems.backgrounds.find((fs) => fs.id === f.id)!.name
+	}));
+	const inventory = { foods, items, backgrounds };
+
+	return { user, tip, inventory };
 };
+
+export const actions = {
+	inventory: async ({ locals, url }) => {
+		const user = locals.user!;
+
+		const itemId = url.searchParams.get('item') as string;
+		const itemType = url.searchParams.get('type') as keyof typeof storeItems;
+		const storeItem = storeItems[itemType].find((f) => f.id === itemId)!;
+
+		const newUser = (await User.findOne({ _id: user.id }).exec())!;
+		const penguin = (await Penguin.findOne({ ownerId: user.id }).exec())!;
+
+		const index = newUser.inventory[itemType].findIndex((f) => f.id === itemId);
+		if (index < 1 || newUser.inventory[itemType][index].amount <= 0)
+			return fail(400, { message: 'You do not have this item.' });
+
+		penguin.happiness += storeItem.happinessRefill;
+		penguin.hunger -= storeItem.hungerRefill;
+		newUser.inventory[itemType][index].amount -= 1;
+
+		await penguin.save();
+		await newUser.save();
+
+		if (itemType === 'foods') {
+			const daily = await Daily.findOne({ userId: user.id }).exec();
+			if (daily && !daily.fedPengyou) {
+				daily.fedPengyou = true;
+				await daily.save();
+
+				newUser.penguCoins = newUser.penguCoins! + PENGUCOINS_PER_COMMISSION;
+				await newUser.save();
+			}
+		}
+	}
+} satisfies Actions;

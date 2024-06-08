@@ -149,7 +149,7 @@
 	.pengyou-walk {
 		animation:
 			walkFrames 1s infinite,
-			walk 4s infinite;
+			walk 12s infinite;
 	}
 
 	@keyframes sad {
@@ -219,29 +219,61 @@
 			transform: scaleX(1);
 			left: 0%;
 		}
+		10% {
+			transform: scaleX(1);
+			left: 40%;
+		}
 		20% {
 			transform: scaleX(1);
+			left: 60%;
+		}
+		21% {
+			transform: scaleX(-1);
+			left: 60%;
+		}
+		30% {
+			transform: scaleX(-1);
 			left: 40%;
 		}
 		40% {
+			transform: scaleX(-1);
+			left: 0%;
+		}
+		50% {
+			transform: scaleX(-1);
+			left: 0%;
+		}
+		60%{
+			transform: scaleX(-1);
+			left: -20%;
+		}
+		61%{
 			transform: scaleX(1);
-			left: 60%;
+			left: -20%;
 		}
-		41% {
-			transform: scaleX(-1);
-			left: 60%;
+		70%{
+			transform: scaleX(1);
+			left:-15%;
 		}
-		60% {
-			transform: scaleX(-1);
-			left: 40%;
+		80%{
+			transform: scaleX(1);
+			left:15%;
 		}
-		80% {
+		81%{
 			transform: scaleX(-1);
-			left: 0%;
+			left:15%;
 		}
-		100% {
+		90%{
 			transform: scaleX(-1);
-			left: 0%;
+			left:10%;
+		}
+		99%{
+			transform: scaleX(-1);
+			left:0%;
+		}
+		100%{
+			transform: scaleX(1);
+			left:0%;
 		}
 	}
 

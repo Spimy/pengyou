@@ -22,7 +22,8 @@ export const lucia = new Lucia(adapter, {
 			email: attributes.email,
 			currency: attributes.currency,
 			monthlyBudget: attributes.monthlyBudget,
-			penguCoins: attributes.penguCoins
+			penguCoins: attributes.penguCoins,
+			inventory: attributes.inventory
 		};
 	}
 });
@@ -36,6 +37,11 @@ declare module 'lucia' {
 			currency: string;
 			monthlyBudget: number;
 			penguCoins: number;
+			inventory: {
+				foods: { id: string; amount: number }[];
+				items: { id: string; amount: number }[];
+				backgrounds: { id: string; amount: number }[];
+			};
 		};
 	}
 }

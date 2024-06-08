@@ -59,7 +59,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			);
 			const newDailyExpense = JSON.parse(newDailyExpenseResponse.response.text()).dailyExpense;
 			newUser.dailyExpenses = newDailyExpense;
-			tip += `Your newly calculated daily expense is ${user.currency} ${newDailyExpense}`;
+			tip += `Your newly calculated daily expense is ${user.currency} ${newDailyExpense.toFixed(2)}`;
 		}
 
 		const daily = await Daily.findOne({ userId: user.id }).exec();

@@ -101,7 +101,40 @@
 >
 
 <Modal id="transaction" title="Add Transaction">
+	<form class="mb-8 flex flex-wrap flex-col"  method="POST" action="?/ocr" enctype="multipart/form-data" use:enhance>
+		<h1 class="text-white mx-auto text-2xl">AUTOMATIC</h1>
+		<label for="receipt">Custom Upload<svg
+			xmlns="http://www.w3.org/2000/svg"
+			class="text-red-500 mx-auto"
+			width="100"
+			height="100"
+			viewBox="0 0 32 32"
+			stroke-width="1.5"
+			stroke="var(--clr-primary-100)"
+			fill="currentColor"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		>
+		<path d="M30.9599 22.86H29.4299V27.43H30.9599V22.86Z"  />
+		<path d="M30.9599 1.51999H29.4299V6.09999H30.9599V1.51999Z"  />
+		<path d="M29.4301 0H24.8601V1.52H29.4301V0Z"  />
+		<path d="M29.4301 27.43H24.8601V28.95H29.4301V27.43Z"  />
+		<path d="M23.48 12.475H9.47998V14.475H23.48V12.475Z"  />
+		<path d="M23.48 7.47501H9.47998V9.47501H23.48V7.47501Z"  />
+		<path d="M23 17H16V19H23V17Z"  />
+		<path d="M8.10003 27.43H3.53003V28.95H8.10003V27.43Z"  />
+		<path d="M8.10003 0H3.53003V1.52H8.10003V0Z"  />
+		<path d="M3.53 22.86H2V27.43H3.53V22.86Z"  />
+		<path d="M3.53 1.51999H2V6.09999H3.53V1.51999Z"  />
+		</svg></label>
+		<input type="file" name="receipt" id="receipt" class="invisible w-1"/>
+		<button class="bg-red-500 font-bold py-2 px-4 rounded-full text-white mt-4" type="submit"
+		>Scan</button
+	>
+	</form>
+
 	<form class="grid gap-2" action="/transactions/?/addTransaction" method="POST" use:enhance>
+		<h1 class="text-white mx-auto text-2xl">MANUAL</h1>
 		<div>
 			<label class="text-lg font-bold text-white mb-2" for="type">Type</label>
 			<TypeOfExpenses />
@@ -130,14 +163,6 @@
 		<button class="bg-sky-300 font-bold py-2 px-4 rounded-full text-white mt-4" type="submit"
 			>Add</button
 		>
-	</form>
-
-	<form class="pt-32"  method="POST" action="?/ocr" enctype="multipart/form-data" use:enhance>
-		<label for="receipt">Receipt</label>
-		<input type="file" name="receipt" id="receipt" />
-	
-		<input type="text" name="test" id="test" />
-		<button type="submit" class="p-5 bg-red-500">Upload</button>
 	</form>
 	
 </Modal>

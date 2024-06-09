@@ -26,7 +26,7 @@
 				</button>
 			{/each}
 		</div>
-		<h1 class="text-center font-bold text-2xl">Items</h1>
+		<!-- <h1 class="text-center font-bold text-2xl">Items</h1>
 		<div class="flex flex-row flex-wrap">
 			{#each storeItems.items as item}
 				<button
@@ -38,7 +38,7 @@
 					<p class="text-xs text-center">{item.cost} PenguCoins</p>
 				</button>
 			{/each}
-		</div>
+		</div> -->
 		<h1 class="text-center font-bold text-2xl">Backgrounds</h1>
 		<div class="flex flex-row flex-wrap">
 			{#each storeItems.backgrounds as background}

@@ -27,7 +27,32 @@
 ## About The Project
 <b> PengYou </b> is a solution project for ImagineHack 2024 by Team Dessert Spoons, it is a platform targetting the people that are interested in improving their financial situation. 
 
-The mission of <b> PengYou <b> is to encourage people to form good budgeting habits by making budgeting more friendly to them. We believe in the importance of forming good habits, thus we have introduced a reward system using a virtual pet to motivate people to actively take control of their financial lives.
+<h3>Problem Statement</h3>
+<b>There is a need</b> for an app for people requiring budgeting advice where they can learn day to day <b>tips and tricks</b> and <b>practical budgeting</b>.
+<br>
+<h3>Our Mission</h3>
+The mission of <b> PengYou </b> is to encourage people to form good budgeting habits by making budgeting more friendly to them. We believe in the importance of forming good habits, thus we have introduced a reward system using a virtual pet to motivate people to actively take control of their financial lives.
+
+<h3>Values</h3>
+<b> PengYou </b> will provide a significant amount of value for its users: 
+<br>
+<br>
+1. Raise Awareness
+<br>
+2. Tool for budgeting
+<br>
+3. Reduced Stress
+<br>
+4. Areas to cut off
+<br>
+5. Goal Setting 
+<br>
+6. Long-term Security
+<br>
+7. Practical Learning
+<br>
+8. Confidence Builder
+<br>
 
 <h3>SDG Goals</h3>
 <b> PengYou </b> involves the following Sustainable Development Goals: 
@@ -57,8 +82,8 @@ First, clone this repository.
 
 ## Acknowledgments
 Team Dessert Spoons members:
-* [William](https://github.com/Spimy)
-* [Alex](https://github.com/datgai)
-* [Lani](https://github.com/l4n1skyy)
-* [Lai]()
-* [Josh]()
+* [William Law Hong Waye](https://github.com/Spimy)
+* [Alex Chee Kai Hong](https://github.com/datgai)
+* [Lanisha Anusri A/P Saravanan](https://github.com/l4n1skyy)
+* [Lai Yung Wei]()
+* [Joshua Edwin Rene Bonham]()

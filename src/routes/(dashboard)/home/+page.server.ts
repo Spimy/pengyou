@@ -3,7 +3,7 @@ import { Daily } from '$lib/server/database/schema/dailies';
 import { Penguin } from '$lib/server/database/schema/penguin';
 import { Transaction } from '$lib/server/database/schema/transactions';
 import { jsonModel, textModel } from '$lib/server/gemini';
-import { PENGUCOINS_PER_COMMISSION, storeItems,ITransactionType } from '$lib/utils';
+import { ITransactionType, PENGUCOINS_PER_COMMISSION, storeItems } from '$lib/utils';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -75,29 +75,41 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	const foods = user.inventory.foods.map((f) => ({
 		...f,
-		name: storeItems.foods.find((fs) => fs.id === f.id)!.name
+		name: storeItems.foods.find((fs) => fs.id === f.id)!.name,
+		img: storeItems.foods.find((fs) => fs.id === f.id)!.img
 	}));
 	const items = user.inventory.items.map((f) => ({
 		...f,
-		name: storeItems.items.find((fs) => fs.id === f.id)!.name
+		name: storeItems.items.find((fs) => fs.id === f.id)!.name,
+		img: storeItems.items.find((fs) => fs.id === f.id)!.img
 	}));
 	const backgrounds = user.inventory.backgrounds.map((f) => ({
 		...f,
-		name: storeItems.backgrounds.find((fs) => fs.id === f.id)!.name
+		name: storeItems.backgrounds.find((fs) => fs.id === f.id)!.name,
+		img: storeItems.backgrounds.find((fs) => fs.id === f.id)!.img
 	}));
 	const inventory = { foods, items, backgrounds };
 
 	const transactionz = await Transaction.find({ userId: user.id }).lean().exec();
 
-	return { user, tip, inventory,transactions: transactionz.map((t) => ({ ...t, _id: t._id.toHexString() })) };
+	const daily = await Daily.findOne({ userId: user.id }).lean().exec();
+
+	return {
+		user,
+		tip,
+		inventory,
+		daily: daily ? { ...daily, _id: daily._id.toHexString() } : undefined,
+		transactions: transactionz.map((t) => ({ ...t, _id: t._id.toHexString() }))
+	};
 };
 
 export const actions = {
-	ocr: async ({ locals, request }) => {
+	ocr: async ({ locals, request, url }) => {
 		const user = locals.user!;
 
 		const formData = await request.formData();
 		const receipt = formData.get('receipt');
+		const redirectTo = url.searchParams.get('redirect');
 
 		if (!(receipt as File).name || (receipt as File).name === 'undefined') {
 			return fail(400, {
@@ -110,22 +122,27 @@ export const actions = {
 			'Based on this expense, choose the category of this expense based the following list: Entertainment, Food & Beverage, Transport, Rent, Utility Bills, Miscellaneous. Set that as {category: string}. What is this receipt for? Set that as {description: string}. What is the total paid? Set that as {total: number}';
 		const file = receipt as File;
 
-		const result = await jsonModel.generateContent([prompt, await fileToGenerativePart(file)]);
-		const receiptJson = JSON.parse(result.response.text()) as {
-			category: string;
-			description: string;
-			total: number;
-		};
+		try {
+			const result = await jsonModel.generateContent([prompt, await fileToGenerativePart(file)]);
+			const receiptJson = JSON.parse(result.response.text()) as {
+				category: string;
+				description: string;
+				total: number;
+			};
 
-		await Transaction.create({
-			userId: user.id,
-			amount: receiptJson.total,
-			transactionType: ITransactionType.EXPENSE,
-			category: receiptJson.category,
-			title: receiptJson.description
-		});
+			await Transaction.create({
+				userId: user.id,
+				amount: receiptJson.total,
+				transactionType: ITransactionType.EXPENSE,
+				category: receiptJson.category,
+				title: receiptJson.description
+			});
+		} catch (e) {
+			console.error(e);
+			return fail(500, { message: 'Rate limited. Please try again.' });
+		}
 
-		redirect(300,"/transactions")
+		return redirect(302, redirectTo!);
 	},
 	inventory: async ({ locals, url }) => {
 		const user = locals.user!;
@@ -138,12 +155,14 @@ export const actions = {
 		const penguin = (await Penguin.findOne({ ownerId: user.id }).exec())!;
 
 		const index = newUser.inventory[itemType].findIndex((f) => f.id === itemId);
-		if (index < 1 || newUser.inventory[itemType][index].amount <= 0)
+		if (index < 0 || newUser.inventory[itemType][index].amount <= 0)
 			return fail(400, { message: 'You do not have this item.' });
 
 		penguin.happiness += storeItem.happinessRefill;
 		penguin.hunger -= storeItem.hungerRefill;
 		newUser.inventory[itemType][index].amount -= 1;
+
+		await newUser.updateOne({ inventory: newUser.inventory }).exec();
 
 		await penguin.save();
 
@@ -156,10 +175,6 @@ export const actions = {
 				newUser.penguCoins = newUser.penguCoins! + PENGUCOINS_PER_COMMISSION;
 				await newUser.save();
 			}
-		} else {
-			await newUser.save();
 		}
-
-		return redirect(302, '/transaction');
 	}
 } satisfies Actions;

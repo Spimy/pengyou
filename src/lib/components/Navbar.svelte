@@ -3,10 +3,10 @@
 </script>
 
 <nav
-	class="flex fixed w-full bottom-[4px] md:relative md:top-0 text-white h-50 md:flex md:justify-between md:items-center z-10 md:rounded-xl md:rounded-t-none"
+	class="flex fixed w-full bottom-[4px] md:relative md:rounded-none md:top-0 text-white h-50 md:flex md:justify-between md:items-center z-10"
 >
 	<div
-		class={`flex flex-1 mx-2 bg-brack bottom-[4px] md:bottom-0 md:flex items-center md:flex-row rounded-full md:pb-0 md:static md:filter-none`}
+		class={`flex flex-1 mx-2 md:mx-0 bg-brack bottom-[4px] md:bottom-0 md:flex items-center md:flex-row rounded-full md:rounded-none md:pb-0 md:static md:filter-none`}
 	>
 		<a
 			href="/home"
@@ -44,7 +44,7 @@
 				<path d="M9.00229 17.335H7.59631V18.665H9.00229V17.335Z" />
 				<path d="M7.59631 18.665H6.19952V19.995H7.59631V18.665Z" />
 			</svg>
-			<p class="text-[8px]">Home</p>
+			<p class="text-xs md:text-base">Home</p>
 
 			<div
 				class="{$page.url.pathname == '/home'
@@ -104,7 +104,7 @@
 				<path d="M1.47012 9.88806H0V18.1119H1.47012V9.88806Z" />
 			</svg>
 
-			<p class="text-[8px] text-center">Transactions</p>
+			<p class="text-xs md:text-base text-center">Transactions</p>
 
 			<div
 				class="{$page.url.pathname == '/transactions'
@@ -150,7 +150,7 @@
 				<path d="M4.57504 4.57001H3.04504V6.10001H4.57504V4.57001Z" />
 			</svg>
 
-			<p class="text-[8px]">Store</p>
+			<p class="text-xs md:text-base">Store</p>
 
 			<div
 				class="{$page.url.pathname == '/store'

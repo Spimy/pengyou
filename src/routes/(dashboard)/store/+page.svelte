@@ -1,18 +1,41 @@
-<script>
+<script lang="ts">
 	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
+	import Modal from '$lib/components/Modal.svelte';
+	import type { SubmitFunction } from './$types.js';
 
 	export let data;
+	export let form;
+
+	const customEnhance: SubmitFunction = () => {
+		return async ({ update }) => {
+			window.location.replace(`${$page.url.pathname}#msg`);
+			return update({ reset: true });
+		};
+	};
 </script>
+
+<Modal id="msg" title="Acknowledgement">
+	{#if form}
+		<p class="text-white">
+			{form.message}
+		</p>
+	{/if}
+</Modal>
 
 <form
 	class="pt-20 mb-20 flex min-h-screen min-w-fit items-center justify-center bg-gradient-to-b from-sky-300 to-white-300 px-1.5"
 	method="POST"
-	use:enhance
+	use:enhance={customEnhance}
 >
-	<div class="flex max-w-screen flex-col rounded-xl bg-brack py-12 px-5 text-slate-200">
+	<div class="flex max-w-screen flex-col rounded-xl bg-brack p-10 text-slate-200">
 		<h1 class="text-center font-bold text-4xl">PengYou Store</h1>
-		<img class="w-28 h-28 mx-auto my-5" src="casual-penguin.png" alt="PengYou" title="Mr.PengYou" />
-		<br />
+		<img
+			class="w-32 h-32 mx-auto mt-4 mb-6 object-contain"
+			src="store-penguin.png"
+			alt="PengYou"
+			title="Mr.PengYou"
+		/>
 		<h1 class="text-center font-bold text-2xl">Food</h1>
 		<div class="flex flex-row flex-wrap">
 			{#each data.storeItems.foods as food}
@@ -22,30 +45,14 @@
 					disabled={food.cost === 0}
 					class="flex grow m-2 h-[10rem] w-[8rem] flex-col justify-evenly bg-black rounded-3xl"
 				>
-					<h2 class="text-center">{food.name}</h2>
-					{#if food.id == 'fish' }
-					<img src=item-fish.png class="w-[80px] mx-auto" alt="">
-					{:else}
-					<img src="item-ice.png" class="w-[80px] mx-auto" alt="">
-					{/if }
-					<p class="text-xs text-center">{food.cost} PenguCoins</p>
+					<h2 class="text-center px-4">{food.name}</h2>
+					<img src={food.img} class="w-[80px] mx-auto" alt="" />
+					<p class="text-xs text-center px-4">{food.cost} PenguCoins</p>
 				</button>
 			{/each}
 		</div>
-		<!-- <h1 class="text-center font-bold text-2xl">Items</h1>
-		<div class="flex flex-row flex-wrap">
-			{#each data.storeItems.items as item}
-				<button
-					formaction="?/store&item={item.id}&type=items"
-					disabled={item.cost === 0}
-					class="flex grow m-2 h-[10rem] w-[8rem] flex-col justify-evenly bg-black rounded-3xl"
-				>
-					<h2 class="text-center">{item.name}</h2>
-					<p class="text-xs text-center">{item.cost} PenguCoins</p>
-				</button>
-			{/each}
-		</div> -->
-		<h1 class="text-center font-bold text-2xl">Backgrounds</h1>
+
+		<h1 class="text-center font-bold text-2xl mt-4">Backgrounds</h1>
 		<div class="flex flex-row flex-wrap">
 			{#each data.storeItems.backgrounds as background}
 				<button
@@ -53,13 +60,9 @@
 					disabled={background.cost === 0}
 					class="flex grow m-2 h-[10rem] w-[8rem] flex-col justify-evenly bg-black rounded-3xl"
 				>
-					<h2 class="text-center">{background.name}</h2>
-					{#if background.id == 'snowy' }
-					<img src=item-defaultback.png class="w-[80px] mx-auto" alt="">
-					{:else}
-					<img src="item-beachback.png" class="w-[80px] mx-auto" alt="">
-					{/if }
-					<p class="text-xs text-center">{background.cost} PenguCoins</p>
+					<h2 class="text-center px-4">{background.name}</h2>
+					<img src={background.img} class="w-[80px] mx-auto" alt="" />
+					<p class="text-xs text-center px-4">{background.cost} PenguCoins</p>
 				</button>
 			{/each}
 		</div>

@@ -11,7 +11,6 @@
 	<div class="flex max-w-screen flex-col rounded-xl bg-brack py-12 px-3 text-slate-200">
 		<h1 class="text-center font-bold text-4xl">PengYou Store</h1>
 		<img class="w-28 h-28 mx-auto my-5" src="casual-penguin.png" alt="PengYou" title="Mr.PengYou" />
-		<br />
 		<h1 class="text-center font-bold text-2xl">Food</h1>
 		<div class="flex flex-row flex-wrap">
 			{#each storeItems.foods as food}

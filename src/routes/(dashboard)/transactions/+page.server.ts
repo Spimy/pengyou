@@ -3,7 +3,7 @@ import { Daily } from '$lib/server/database/schema/dailies';
 import { Transaction } from '$lib/server/database/schema/transactions';
 import { jsonModel } from '$lib/server/gemini';
 import { ITransactionType, PENGUCOINS_PER_COMMISSION } from '$lib/utils';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 async function fileToGenerativePart(file: File) {
@@ -17,52 +17,21 @@ async function fileToGenerativePart(file: File) {
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const user = locals.user!;
-	const transactions = await Transaction.find({ userId: user.id }).lean().exec();
+	const transactions = await Transaction.find({ userId: user.id })
+		.sort('-created_at')
+		.lean()
+		.exec();
 	return { user, transactions: transactions.map((t) => ({ ...t, _id: t._id.toHexString() })) };
 };
 
 export const actions = {
-	ocr: async ({ locals, request }) => {
-		const user = locals.user!;
-
-		const formData = await request.formData();
-		const receipt = formData.get('receipt');
-
-		if (!(receipt as File).name || (receipt as File).name === 'undefined') {
-			return fail(400, {
-				error: true,
-				message: 'You must provide a receipt to upload'
-			});
-		}
-
-		const prompt =
-			'Based on this expense, choose the category of this expense based the following list: Entertainment, Food & Beverage, Transport, Rent, Utility Bills, Miscellaneous. Set that as {category: string}. What is this receipt for? Set that as {description: string}. What is the total paid? Set that as {total: number}';
-		const file = receipt as File;
-
-		const result = await jsonModel.generateContent([prompt, await fileToGenerativePart(file)]);
-		const receiptJson = JSON.parse(result.response.text()) as {
-			category: string;
-			description: string;
-			total: number;
-		};
-
-		await Transaction.create({
-			userId: user.id,
-			amount: receiptJson.total,
-			transactionType: ITransactionType.EXPENSE,
-			category: receiptJson.category,
-			title: receiptJson.description
-		});
-
-		redirect(300,"/transactions")
-	},
 	addTransaction: async ({ request, locals }) => {
 		const user = locals.user!;
 		const formData = await request.formData();
 
 		const title = formData.get('title');
 		const amount = formData.get('amount');
-		const transactionType = formData.get('type') as ITransactionType;
+		const transactionType = formData.get('displayType') as ITransactionType;
 
 		if (typeof title !== 'string') {
 			return fail(400, { message: 'Invalid title' });
@@ -92,7 +61,7 @@ export const actions = {
 
 		// Add PenguCoins to user as daily commission
 		const daily = await Daily.findOne({ userId: user.id }).exec();
-		if (!daily || daily.addedTransaction) return;
+		if (!daily || daily.addedTransaction) return { message: 'Added transaction' };
 
 		daily.addedTransaction = true;
 		await daily.save();
@@ -101,5 +70,7 @@ export const actions = {
 			{ _id: user.id },
 			{ penguCoins: user.penguCoins + PENGUCOINS_PER_COMMISSION }
 		);
+
+		return { message: 'Added transaction' };
 	}
 } satisfies Actions;

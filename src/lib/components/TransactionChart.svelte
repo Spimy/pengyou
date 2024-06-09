@@ -45,7 +45,7 @@
 					}
 				},
 				title: {
-					text: 'Transactions',
+					text: 'Budget',
 					style: {
 						color: '#FFFFFF'
 					}

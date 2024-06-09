@@ -25,14 +25,49 @@ export const PENGUCOINS_PER_COMMISSION = 10;
 // ! Realistically will be in database
 export const storeItems = {
 	foods: [
-		{ id: 'fish', name: 'Fish', cost: 20, hungerRefill: 10, happinessRefill: 0 },
-		{ id: 'ice-cream', name: 'Ice Cream', cost: 20, hungerRefill: 5, happinessRefill: 0 }
+		{
+			id: 'fish',
+			name: 'Fish',
+			cost: 20,
+			hungerRefill: 10,
+			happinessRefill: 0,
+			img: '/items/item-fish.png'
+		},
+		{
+			id: 'ice-cream',
+			name: 'Ice Cream',
+			cost: 20,
+			hungerRefill: 5,
+			happinessRefill: 0,
+			img: '/items/item-ice.png'
+		}
 	],
 	items: [
-		{ id: 'golden-spoon', name: 'Golden Spoon', cost: 0, hungerRefill: 0, happinessRefill: 15 }
+		{
+			id: 'golden-spoon',
+			name: 'Golden Spoon',
+			cost: 0,
+			hungerRefill: 0,
+			happinessRefill: 15,
+			img: '/items/spoon.png'
+		}
 	],
 	backgrounds: [
-		{ id: 'snowy', name: 'Snowy', cost: 0, hungerRefill: 0, happinessRefill: 0 },
-		{ id: 'beach', name: 'Beach', cost: 160, hungerRefill: 0, happinessRefill: 0 }
+		{
+			id: 'snowy',
+			name: 'Snowy',
+			cost: 0,
+			hungerRefill: 0,
+			happinessRefill: 0,
+			img: '/items/item-defaultback.png'
+		},
+		{
+			id: 'beach',
+			name: 'Beach',
+			cost: 160,
+			hungerRefill: 0,
+			happinessRefill: 0,
+			img: '/items/item-beachback.png'
+		}
 	]
 };

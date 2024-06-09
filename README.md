@@ -84,6 +84,6 @@ First, clone this repository.
 Team Dessert Spoons members:
 * [William Law Hong Waye](https://github.com/Spimy)
 * [Alex Chee Kai Hong](https://github.com/datgai)
-* [Lanisha Anusri A/P Saravanan](https://github.com/l4n1skyy)
+* [Lanisha (l4n1skyy)](https://github.com/l4n1skyy)
 * [Lai Yung Wei]()
 * [Joshua Edwin Rene Bonham]()

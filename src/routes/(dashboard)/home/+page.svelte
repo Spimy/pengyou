@@ -246,20 +246,22 @@
 	</h1>
 	<div>
 		<div class="text-white mx-auto mb-4 w-fit">
-			<h2 class="font-bold text-center text-xl">Budget this month:</h2>
+			<h2 class="font-bold text-center text-xl">Budget used this month:</h2>
 
 			<p class="text-3xl md:text-5xl font-bold flex items-center justify-center">
 				<span class="text-xl">{data.user.currency}&nbsp;</span>
-				{transactions.at(-1)?.y.toFixed(2)}/{data.user.monthlyBudget.toFixed(2)}
+				{(data.user.monthlyBudget - (transactions.at(-1)?.y ?? 0)).toFixed(
+					2
+				)}/{data.user.monthlyBudget.toFixed(2)}
 			</p>
 
 			<div class="flex items-center gap-4 mt-4 w-full">
 				<span>0</span>
 				<meter
 					class="rounded-full w-full bg-gradient-to-r from-white to-white"
-					value={data.user.monthlyBudget - (transactions.at(-1)?.y ?? 0)}
+					value={(data.user.monthlyBudget - (transactions.at(-1)?.y ?? 0)).toFixed(2)}
 					min="0"
-					max={data.user.monthlyBudget}
+					max={data.user.monthlyBudget.toFixed(2)}
 					title="Budget used"
 				/>
 				<span>{data.user.monthlyBudget}</span>

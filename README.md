@@ -10,80 +10,107 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-    </li>
-    <li>
-      <a href="#built-with">Built With</a>
-    </li>
-    <li>
-      <a href="#installation">Installation</a>
-    </li>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#built-with">Built With</a></li>
+    <li><a href="#installation">Installation</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#fun-fact">Fun Fact</a></li>
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
-<b> PengYou </b> is a solution project for ImagineHack 2024 by Team Dessert Spoons, it is a platform targetting the people that are interested in improving their financial situation. 
 
-<h3>Problem Statement</h3>
-<b>There is a need</b> for an app for people requiring budgeting advice where they can learn day to day <b>tips and tricks</b> and <b>practical budgeting</b>.
-<br>
-<h3>Our Mission</h3>
-The mission of <b> PengYou </b> is to encourage people to form good budgeting habits by making budgeting more friendly to them. We believe in the importance of forming good habits, thus we have introduced a reward system using a virtual pet to motivate people to actively take control of their financial lives.
+**PengYou** is a solution project for ImagineHack 2024 by Team Dessert Spoons, it is a platform targetting the people that are interested in improving their financial situation.
 
-<h3>Values</h3>
-<b> PengYou </b> will provide a significant amount of value for its users: 
-<br>
-<br>
+### Problem Statement
+
+**There is a need** for an app for people requiring budgeting advice where they can learn day to day **tips and tricks** and **practical budgeting**.
+
+### Our Mission
+
+The mission of **PengYou** is to encourage people to form good budgeting habits by making budgeting more friendly to them. We believe in the importance of forming good habits, thus we have introduced a reward system using a virtual pet to motivate people to actively take control of their financial lives.
+
+### Values
+
+**PengYou** will provide a significant amount of value for its users:
+
 1. Raise Awareness
-<br>
 2. Tool for budgeting
-<br>
 3. Reduced Stress
-<br>
 4. Areas to cut off
-<br>
-5. Goal Setting 
-<br>
+5. Goal Setting
 6. Long-term Security
-<br>
 7. Practical Learning
-<br>
 8. Confidence Builder
-<br>
 
-<h3>SDG Goals</h3>
-<b> PengYou </b> involves the following Sustainable Development Goals: 
-<br>
-<br>
-<p align="center">
-      <a href="https://sdgs.un.org/goals/goal1"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Sustainable_Development_Goal_01NoPoverty.svg/1200px-Sustainable_Development_Goal_01NoPoverty.svg.png"  height="100" alt="Goal 1 : No Poverty"> </a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-  <a href="https://sdgs.un.org/goals/goal4"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Sustainable_Development_Goal_04QualityEducation.svg/1200px-Sustainable_Development_Goal_04QualityEducation.svg.png" height="100" alt="Goal 4 : Quality Education"> </a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  
-  <a href="https://sdgs.un.org/goals/goal8"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Sustainable_Development_Goal_08DecentWork.svg/800px-Sustainable_Development_Goal_08DecentWork.svg.png" height="100" alt="Goal 8 : Decent work and economic growth"> </a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-</p>
+### SDG Goals
+
+**PengYou** involves the following Sustainable Development Goals:
+
+<div style="display: flex; justify-content: space-evenly;">
+  <a href="https://sdgs.un.org/goals/goal1">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Sustainable_Development_Goal_01NoPoverty.svg/1200px-Sustainable_Development_Goal_01NoPoverty.svg.png"  height="100" alt="Goal 1 : No Poverty">
+  </a>
+  <a href="https://sdgs.un.org/goals/goal4">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Sustainable_Development_Goal_04QualityEducation.svg/1200px-Sustainable_Development_Goal_04QualityEducation.svg.png" height="100" alt="Goal 4 : Quality Education">
+  </a>  
+  <a href="https://sdgs.un.org/goals/goal8">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Sustainable_Development_Goal_08DecentWork.svg/800px-Sustainable_Development_Goal_08DecentWork.svg.png" height="100" alt="Goal 8 : Decent work and economic growth">
+  </a>
+</div>
 </ul>
 
 ## Built With
-* [Lucia](https://lucia-auth.com/)
-* [ApexCharts](https://apexcharts.com/)
-* [MongoDB](https://www.mongodb.com/)
-* [TypeScript](https://www.typescriptlang.org/)
+
+- [SvelteKit](https://kit.svelte.dev/)
+- [Lucia](https://lucia-auth.com/)
+- [ApexCharts](https://apexcharts.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## Installation
-First, clone this repository.
+
+There are some prerequisites that need to be set up:
+
+1. Have a running MongoDB server which can be downloaded from [here](https://www.mongodb.com/try/download/community).
+2. Clone this repository by running `git clone https://github.com/Spimy/pengyou.git`.
+
+### Development
 
 1. Navigate into the folder.
 2. Run `pnpm install` to download the dependencies.
-3. Include the API keys into an '.env' file following '.env.example', and rerun `pnpm run dev`.
-4. Run `pnpm run dev`.
+3. Setup environment variables following [.env.example](.env.example).
+4. Run `pnpm run dev` to run the app in dev mode.
 
+### Production
+
+1. Navigate into the folder.
+2. Run `pnpm install` to install the dependencies.
+3. Setup environment variables following [.env.example](.env.example).
+4. Run `pnpm run build` to build the project.
+5. Run `pnpm prune --prod` to delete all dev dependencies.
+6. Run `pnpm run start` to start the built project.
+
+You can then reverse proxy into the built project using a web server such as [NGINX](https://nginx.org/en/), [Traefik](https://traefik.io/), etc.
+
+### Docker
+
+WIP
 
 ## Acknowledgments
+
 Team Dessert Spoons members:
-* [William Law Hong Waye](https://github.com/Spimy)
-* [Alex Chee Kai Hong](https://github.com/datgai)
-* [Lanisha (l4n1skyy)](https://github.com/l4n1skyy)
-* [Lai Yung Wei]()
-* [Joshua Edwin Rene Bonham]()
+
+- [William Law Hong Waye (Spimy)](https://github.com/Spimy) - Lead Programmer
+- [Alex Chee Kai Hong](https://github.com/datgai) - UI Designer
+- [Lanisha (l4n1skyy)](https://github.com/l4n1skyy) - Graphics Designer
+- [Lai Yung Wei](https://github.com/LaiYW11) - Frontend Developer
+- [Joshua Edwin Rene Bonham](https://github.com/JBBru-helloworld) - Lead Researcher and Presenter
+
+The aforementioned roles are the main role of each member. It is to be noted that we helped and contributed to each other's tasks, especially the frontend. This was to ensure that we have a consistent UI and thus a good UX by working closely and directly with the Graphics and UI designers.
+
+## Fun Fact
+
+The name **Dessert Spoons** is an attempt at [rickrolling](https://www.youtube.com/shorts/JbeXb0YWQxo) everyone at the Hackathon.

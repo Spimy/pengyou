@@ -88,9 +88,9 @@
 						/>
 					</div>
 
-					<button class="bg-sky-300 font-bold py-2 px-4 rounded-full text-white mt-4" type="submit"
-						>Add</button
-					>
+					<button class="bg-sky-300 font-bold py-2 px-4 rounded-full text-white mt-4" type="submit">
+						Add
+					</button>
 				</form>
 			</Modal>
 			<a
@@ -108,7 +108,7 @@
 					colors: ['#00FFFF'],
 					series: [
 						{
-							data: data.transactions.reverse().map((t, index) => ({
+							data: data.transactions.toReversed().map((t, index) => ({
 								x: t.title,
 								// I do not remember how this works lol
 								y: data.transactions.reduce(

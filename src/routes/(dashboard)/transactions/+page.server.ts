@@ -75,7 +75,7 @@ export const actions = {
 		});
 
 		await updateDailyTransaction(user);
-		return { message: 'Added transaction' };
+		return redirect(302, '/transactions');
 	},
 	ocr: async ({ locals, request, url }) => {
 		const user = locals.user!;

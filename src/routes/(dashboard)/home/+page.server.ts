@@ -123,8 +123,18 @@ export const actions = {
 		if (index < 0 || newUser.inventory[itemType][index].amount <= 0)
 			return fail(400, { message: 'You do not have this item.' });
 
-		penguin.happiness += storeItem.happinessRefill;
-		penguin.hunger -= storeItem.hungerRefill;
+		if (penguin.happiness + storeItem.happinessRefill >= 100) {
+			penguin.happiness = 100;
+		} else {
+			penguin.happiness += storeItem.happinessRefill;
+		}
+
+		if (penguin.hunger - storeItem.hungerRefill <= 0) {
+			penguin.hunger = 0;
+		} else {
+			penguin.hunger -= storeItem.hungerRefill;
+		}
+
 		if (!storeItem.permanent) newUser.inventory[itemType][index].amount -= 1;
 
 		await newUser.updateOne({ inventory: newUser.inventory }).exec();

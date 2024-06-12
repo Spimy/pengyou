@@ -29,5 +29,5 @@
 </script>
 
 {#if loaded}
-	<div use:chart={options}></div>
+	<div class="overflow-hidden" use:chart={options}></div>
 {/if}

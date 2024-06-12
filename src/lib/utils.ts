@@ -66,7 +66,7 @@ export const storeItems = {
 	],
 	backgrounds: [
 		{
-			id: 'snowy',
+			id: 'default',
 			name: 'Snowy',
 			cost: 0,
 			hungerRefill: 0,

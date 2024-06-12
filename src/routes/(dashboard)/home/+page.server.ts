@@ -84,6 +84,7 @@ export const load: PageServerLoad = async ({ locals, cookies }) => {
 	const transactionz = await Transaction.find({ userId: user.id }).lean().exec();
 	const daily = await Daily.findOne({ userId: user.id }).lean().exec();
 	const skin = cookies.get('skin') ?? 'penguin-default';
+	const bg = cookies.get('bg') ?? 'background-default';
 
 	return {
 		user,
@@ -91,7 +92,8 @@ export const load: PageServerLoad = async ({ locals, cookies }) => {
 		inventory,
 		daily: daily ? { ...daily, _id: daily._id.toHexString() } : undefined,
 		transactions: transactionz.map((t) => ({ ...t, _id: t._id.toHexString() })),
-		skin
+		skin,
+		bg
 	};
 };
 
@@ -110,6 +112,14 @@ export const actions = {
 
 		if (itemType === 'items') {
 			cookies.set('skin', `penguin-${itemId}`, {
+				path: '/',
+				maxAge: 60 * 60 * 24 * 365,
+				secure: false
+			});
+		}
+
+		if (itemType === 'backgrounds') {
+			cookies.set('bg', `background-${itemId}`, {
 				path: '/',
 				maxAge: 60 * 60 * 24 * 365,
 				secure: false

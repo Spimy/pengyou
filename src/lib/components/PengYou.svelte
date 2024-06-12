@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let skinSrc = '/sprites/penguin-default.png';
+	export let bgSrc = '/background/background-default.png';
 </script>
 
 <svelte:head>
@@ -93,7 +94,7 @@
 </svelte:head>
 
 <section class="relative overflow-hidden">
-	<div class="background w-full h-[90dvh]" />
+	<div class="background w-full h-[90dvh]" style="background:url({bgSrc});" />
 	<div
 		class="pengyou-sad pengyou-angry pengyou-love pengyou-depress pengyou-faint pengyou-eat-fish pengyou-eat-ice pengyou-spoon pengyou-walk"
 		id="pengyou"
@@ -103,10 +104,9 @@
 
 <style>
 	.background {
-		background: url(/background/background-default.png);
-		background-repeat: repeat-x;
-		background-size: contain;
-		background-position: bottom;
+		background-repeat: repeat-x !important;
+		background-size: contain !important;
+		background-position: bottom !important;
 	}
 
 	#pengyou {

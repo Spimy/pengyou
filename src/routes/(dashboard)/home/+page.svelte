@@ -72,7 +72,7 @@
 </script>
 
 <div class="relative">
-	<PengYou skinSrc="/sprites/{data.skin}.png" />
+	<PengYou skinSrc="/sprites/{data.skin}.png" bgSrc="/background/{data.bg}.png" />
 
 	<div
 		class="absolute top-20 left-2/4 w-80 md:w-fit -translate-x-2/4 bg-white p-5 rounded-3xl shadow-[-8px_8px_0px_-1px_rgba(5,76,214,25%)]"

@@ -28,7 +28,7 @@
 	method="POST"
 	use:enhance={customEnhance}
 >
-	<div class="mt-20 md:mt-0 min-w-full flex flex-col rounded-xl bg-brack p-10 text-slate-200">
+	<div class="my-20 md:my-0 min-w-full flex flex-col rounded-xl bg-brack p-10 text-slate-200">
 		<h1 class="text-center font-bold text-4xl">PengYou Store</h1>
 		<img
 			class="w-32 h-32 mx-auto mt-4 mb-6 object-contain"

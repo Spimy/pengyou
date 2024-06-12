@@ -9,7 +9,7 @@
 	export let data;
 </script>
 
-<div class="pt-16 bg-primary overflow-none">
+<div class="pt-16 md:pt-0 bg-primary overflow-none">
 	<header class="p-4">
 		<div class="flex flex-row mb-2">
 			<h1 class="text-2xl font-bold flex-1 my-auto">Transactions</h1>
@@ -111,16 +111,18 @@
 							data: data.transactions.toReversed().map((t, index) => ({
 								x: t.title,
 								// I do not remember how this works lol
-								y: data.transactions.reduce(
-									(acc, cur, i) =>
-										i > index
-											? acc
-											: acc +
-												(cur.transactionType === ITransactionType.EXPENSE
-													? -cur.amount
-													: cur.amount),
-									index > 0 ? index - 1 : 0
-								)
+								y: data.transactions
+									.toReversed()
+									.reduce(
+										(acc, cur, i) =>
+											i > index
+												? acc
+												: acc +
+													(cur.transactionType === ITransactionType.EXPENSE
+														? -cur.amount
+														: cur.amount),
+										index > 0 ? index - 1 : 0
+									)
 							}))
 						}
 					],

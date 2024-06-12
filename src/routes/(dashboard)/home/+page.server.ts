@@ -7,6 +7,14 @@ import { PENGUCOINS_PER_COMMISSION, storeItems } from '$lib/utils';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
+interface UserTip {
+	userId: string;
+	tip: string;
+	tipDate: Date;
+}
+
+const userTips: UserTip[] = [];
+
 export const load: PageServerLoad = async ({ locals }) => {
 	const user = locals.user!;
 
@@ -34,35 +42,53 @@ export const load: PageServerLoad = async ({ locals }) => {
 		};
 	});
 
-	let tip: string | undefined = undefined;
-	try {
-		const defaultPrompt = `Max budget per month: ${user.currency} ${user.monthlyBudget}. My monthly income: ${user.currency} ${user.monthlyIncome}. My guesstimated daily expense: ${user.currency} ${user.dailyExpenses}. List of transactions for the past week: ${JSON.stringify(formattedTransactions)}\n\n`;
-		const tipResponse = await textModel.generateContent(
-			`${defaultPrompt}Based on those transactions, provide a short tip of about 40 words to improve spending habits and to better manage expenses, as a virtual pet penguin called Pengyou. Pengyou speaks in third person. Use a cutesy and happy tone while being very educational. Try playing into empathy.`
-		);
-		tip = `${tipResponse.response.text()}`;
+	const userTip = userTips.find((ut) => ut.userId === user.id);
+	let tip: string | undefined = userTip?.tip;
 
-		const newUser = (await User.findOne({ _id: user.id }).exec())!;
-
-		if (formattedTransactions.length > 0) {
-			const newDailyExpenseResponse = await jsonModel.generateContent(
-				`${defaultPrompt}Based on those transactions, calculate an average daily expense. Generate the data in the format: {dailyExpense: number}`
+	// If the last tip was within 30 minutes, do not generate a new tip
+	if (userTip && Date.now() - userTip.tipDate.getTime() < 30 * 60 * 1000) {
+		tip = userTip.tip;
+	} else {
+		try {
+			const defaultPrompt = `Max budget per month: ${user.currency} ${user.monthlyBudget}. My monthly income: ${user.currency} ${user.monthlyIncome}. My guesstimated daily expense: ${user.currency} ${user.dailyExpenses}. List of transactions for the past week: ${JSON.stringify(formattedTransactions)}\n\n`;
+			const tipResponse = await textModel.generateContent(
+				`${defaultPrompt}Based on those transactions, provide a short tip of about 40 words to improve spending habits and to better manage expenses, as a virtual pet penguin called Pengyou. Pengyou speaks in third person. Use a cutesy and happy tone while being very educational. Try playing into empathy.`
 			);
-			const newDailyExpense = JSON.parse(newDailyExpenseResponse.response.text()).dailyExpense;
-			newUser.dailyExpenses = newDailyExpense;
-			tip += `Your newly calculated daily expense is ${user.currency} ${newDailyExpense.toFixed(2)}`;
-		}
+			tip = `${tipResponse.response.text()}`;
 
-		const daily = await Daily.findOne({ userId: user.id }).exec();
-		if (daily && !daily.readAiTip) {
-			daily.readAiTip = true;
-			await daily.save();
+			const newUser = (await User.findOne({ _id: user.id }).exec())!;
 
-			newUser.penguCoins = newUser.penguCoins! + PENGUCOINS_PER_COMMISSION;
-		}
+			if (formattedTransactions.length > 0) {
+				const newDailyExpenseResponse = await jsonModel.generateContent(
+					`${defaultPrompt}Based on those transactions, calculate an average daily expense. Generate the data in the format: {dailyExpense: number}`
+				);
+				const newDailyExpense = JSON.parse(newDailyExpenseResponse.response.text()).dailyExpense;
+				newUser.dailyExpenses = newDailyExpense;
+				tip += `Your newly calculated daily expense is ${user.currency} ${newDailyExpense.toFixed(2)}`;
+			}
 
-		await newUser.save();
-	} catch {}
+			const daily = await Daily.findOne({ userId: user.id }).exec();
+			if (daily && !daily.readAiTip) {
+				daily.readAiTip = true;
+				await daily.save();
+
+				newUser.penguCoins = newUser.penguCoins! + PENGUCOINS_PER_COMMISSION;
+			}
+
+			await newUser.save();
+			
+			if (userTip) {
+				const index = userTips.findIndex(ut => ut.userId === userTip.userId)!;
+				userTips[index] = {
+					...userTips[index],
+					tip,
+					tipDate: new Date()
+				}
+			} else {
+				 userTips.push({ userId: user.id, tip, tipDate: new Date() });
+			}
+		} catch {}
+	}
 
 	const foods = user.inventory.foods.map((f) => ({
 		...f,

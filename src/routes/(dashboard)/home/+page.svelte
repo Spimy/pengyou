@@ -143,7 +143,7 @@
 	<form
 		class="mb-8 flex flex-wrap flex-col"
 		method="POST"
-		action="?/ocr&redirect=/transactions"
+		action="/transactions/?/ocr&redirect=/transactions"
 		enctype="multipart/form-data"
 		use:enhance
 	>

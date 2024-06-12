@@ -18,7 +18,7 @@
 				<form
 					class="mb-8 flex flex-wrap flex-col"
 					method="POST"
-					action="/home/?/ocr&redirect={$page.url.pathname}"
+					action="/transactions/?/ocr&redirect={$page.url.pathname}"
 					enctype="multipart/form-data"
 					use:enhance
 				>

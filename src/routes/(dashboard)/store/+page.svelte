@@ -69,21 +69,19 @@
 
 		<div>
 			<div class="w-full">
-				<form>
-					<div class="mb-6">
-						<div>
-							<br />
-							<div class="flex items-center justify-between text-center">
-								<button
-									class="shadow-[-8px_8px_0px_-1px_rgba(0,0,0,1)] shadow-blue-700 hover:border-blue-500 transition ease-in-out delay-70 bg-primary hover:translate-y-1px active:translate-y-8 hover:scale-110 hover:bg-sky-500 duration-300 text-white font-bold py-2 px-4 rounded-3xl focus:outline-none focus:shadow-outline w-full"
-									type="submit"
-								>
-									Done
-								</button>
-							</div>
+				<div class="mb-6">
+					<div>
+						<br />
+						<div class="flex items-center justify-between text-center">
+							<a
+								class="shadow-[-8px_8px_0px_-1px_rgba(0,0,0,1)] shadow-blue-700 hover:border-blue-500 transition ease-in-out delay-70 bg-primary hover:translate-y-1px active:translate-y-8 hover:scale-110 hover:bg-sky-500 duration-300 text-white font-bold py-2 px-4 rounded-3xl focus:outline-none focus:shadow-outline w-full"
+								href="/home"
+							>
+								Done
+							</a>
 						</div>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>

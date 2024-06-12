@@ -83,8 +83,7 @@ export const load: PageServerLoad = async ({ locals, cookies }) => {
 
 	const transactionz = await Transaction.find({ userId: user.id }).lean().exec();
 	const daily = await Daily.findOne({ userId: user.id }).lean().exec();
-	const skin = cookies.get('skin') ?? 'penguin-default';
-	const bg = cookies.get('bg') ?? 'background-default';
+	const penguin = await Penguin.findOne({ ownerId: user.id }).lean().exec();
 
 	return {
 		user,
@@ -92,8 +91,8 @@ export const load: PageServerLoad = async ({ locals, cookies }) => {
 		inventory,
 		daily: daily ? { ...daily, _id: daily._id.toHexString() } : undefined,
 		transactions: transactionz.map((t) => ({ ...t, _id: t._id.toHexString() })),
-		skin,
-		bg
+		skin: penguin?.spriteSheetId ?? 'penguin-default',
+		bg: penguin?.backgroundId ?? 'background-default'
 	};
 };
 
@@ -111,19 +110,14 @@ export const actions = {
 		const index = newUser.inventory[itemType].findIndex((f) => f.id === itemId);
 
 		if (itemType === 'items') {
-			cookies.set('skin', `penguin-${itemId}`, {
-				path: '/',
-				maxAge: 60 * 60 * 24 * 365,
-				secure: false
-			});
+			await Penguin.updateOne({ ownerId: user.id }, { spriteSheetId: `penguin-${itemId}` }).exec();
 		}
 
 		if (itemType === 'backgrounds') {
-			cookies.set('bg', `background-${itemId}`, {
-				path: '/',
-				maxAge: 60 * 60 * 24 * 365,
-				secure: false
-			});
+			await Penguin.updateOne(
+				{ ownerId: user.id },
+				{ backgroundId: `background-${itemId}` }
+			).exec();
 		}
 
 		if (index < 0 || newUser.inventory[itemType][index].amount <= 0)

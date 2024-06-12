@@ -60,7 +60,7 @@ export const actions = {
 						{ id: 'default', amount: 1 },
 						{ id: 'golden-spoon', amount: 1 }
 					],
-					backgrounds: [{ id: 'snowy', amount: 1 }]
+					backgrounds: [{ id: 'default', amount: 1 }]
 				}
 			});
 

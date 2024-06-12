@@ -76,16 +76,16 @@ export const load: PageServerLoad = async ({ locals }) => {
 			}
 
 			await newUser.save();
-			
+
 			if (userTip) {
-				const index = userTips.findIndex(ut => ut.userId === userTip.userId)!;
+				const index = userTips.findIndex((ut) => ut.userId === userTip.userId)!;
 				userTips[index] = {
 					...userTips[index],
 					tip,
 					tipDate: new Date()
-				}
+				};
 			} else {
-				 userTips.push({ userId: user.id, tip, tipDate: new Date() });
+				userTips.push({ userId: user.id, tip, tipDate: new Date() });
 			}
 		} catch {}
 	}
@@ -118,7 +118,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 		daily: daily ? { ...daily, _id: daily._id.toHexString() } : undefined,
 		transactions: transactionz.map((t) => ({ ...t, _id: t._id.toHexString() })),
 		skin: penguin?.spriteSheetId ?? 'penguin-default',
-		bg: penguin?.backgroundId ?? 'background-default'
+		bg: penguin?.backgroundId ?? 'background-default',
+		stats: { happiness: penguin?.happiness ?? 0, hunger: penguin?.hunger ?? 0 }
 	};
 };
 

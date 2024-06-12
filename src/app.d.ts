@@ -13,6 +13,14 @@ declare global {
 	}
 	interface Window {
 		ApexCharts: typeof import('apexcharts');
+		sadPengyou(): Function<any>;
+		angryPengyou(): Function<any>;
+		lovePengyou(): Function<any>;
+		walkPengyou(): Function<any>;
+		depressPengyou(): Function<any>;
+		faintPengyou(): Function<any>;
+		fishPengyou(): Function<any>;
+		icePengyou(): Function<any>;
 	}
 }
 

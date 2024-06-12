@@ -10,6 +10,7 @@
 
 	export let data;
 	export let form;
+	let pengyouComponent: PengYou;
 
 	const customEnhance: SubmitFunction = () => {
 		return async ({ update, action, result }) => {
@@ -19,29 +20,23 @@
 				window.location.replace(`${$page.url.pathname}#msg`);
 			} else {
 				if (itemId === 'fish') {
-					// @ts-ignore
 					window.fishPengyou();
 
 					setTimeout(() => {
-						// @ts-ignore
 						window.lovePengyou();
 						setTimeout(() => {
-							// @ts-ignore
-							window.walkPengyou();
+							pengyouComponent.triggerEmotion();
 						}, 3000);
 					}, 3000);
 				}
 
 				if (itemId === 'ice-cream') {
-					// @ts-ignore
 					window.icePengyou();
 
 					setTimeout(() => {
-						// @ts-ignore
 						window.lovePengyou();
 						setTimeout(() => {
-							// @ts-ignore
-							window.walkPengyou();
+							pengyouComponent.triggerEmotion();
 						}, 3000);
 					}, 3000);
 				}
@@ -72,7 +67,12 @@
 </script>
 
 <div class="relative">
-	<PengYou skinSrc="/sprites/{data.skin}.png" bgSrc="/background/{data.bg}.png" />
+	<PengYou
+		skinSrc="/sprites/{data.skin}.png"
+		bgSrc="/background/{data.bg}.png"
+		stats={data.stats}
+		bind:this={pengyouComponent}
+	/>
 
 	<div
 		class="absolute top-20 left-2/4 w-80 md:w-fit -translate-x-2/4 bg-white p-5 rounded-3xl shadow-[-8px_8px_0px_-1px_rgba(5,76,214,25%)]"

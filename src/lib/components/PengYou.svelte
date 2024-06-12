@@ -1,6 +1,32 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	export let skinSrc = '/sprites/penguin-default.png';
 	export let bgSrc = '/background/background-default.png';
+	export let stats: {
+		hunger: number;
+		happiness: number;
+	};
+
+	export function triggerEmotion() {
+		if (stats.happiness <= 2 || stats.hunger >= 98) return window.faintPengyou();
+
+		// Depresssed trigger
+		if (stats.happiness >= 0 && stats.happiness <= 10) return window.depressPengyou();
+		if (stats.hunger >= 90 && stats.hunger <= 100) return window.depressPengyou();
+
+		// Sad trigger
+		if (stats.happiness >= 10 && stats.happiness <= 20) return window.sadPengyou();
+		if (stats.hunger >= 80 && stats.hunger <= 90) return window.sadPengyou();
+
+		// Angry trigger
+		if (stats.happiness >= 20 && stats.happiness <= 30) return window.angryPengyou();
+		if (stats.hunger >= 70 && stats.hunger <= 80) return window.angryPengyou();
+
+		return window.walkPengyou();
+	}
+
+	onMount(() => triggerEmotion());
 </script>
 
 <svelte:head>

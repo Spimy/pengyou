@@ -60,7 +60,7 @@ export const storeItems = {
 			cost: 0,
 			hungerRefill: 0,
 			happinessRefill: 15,
-			img: '/items/item-spoon.png',
+			img: '/items/item-golden-spoon.png',
 			permanent: true
 		}
 	],

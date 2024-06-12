@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import ExpensesChart from '$lib/components/ExpensesChart.svelte';
+	import Chart from '$lib/components/Chart.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import TypeOfExpenses from '$lib/components/TypeOfExpenses.svelte';
 	import { ITransactionType } from '$lib/utils';
@@ -100,7 +100,67 @@
 				+
 			</a>
 		</div>
-		<ExpensesChart transactions={data.transactions} />
+
+		<div class="glassEffect p-5 rounded-2xl">
+			<Chart
+				options={{
+					chart: { type: 'line' },
+					colors: ['#00FFFF'],
+					series: [
+						{
+							data: data.transactions.reverse().map((t, index) => ({
+								x: t.title,
+								// I do not remember how this works lol
+								y: data.transactions.reduce(
+									(acc, cur, i) =>
+										i > index
+											? acc
+											: acc +
+												(cur.transactionType === ITransactionType.EXPENSE
+													? -cur.amount
+													: cur.amount),
+									index > 0 ? index - 1 : 0
+								)
+							}))
+						}
+					],
+					yaxis: [
+						{
+							axisTicks: {
+								show: true
+							},
+							axisBorder: {
+								show: true,
+								color: '#FFFFFF'
+							},
+							labels: {
+								style: {
+									colors: '#FFFFFF'
+								}
+							},
+							title: {
+								text: 'Balance',
+								style: {
+									color: '#FFFFFF'
+								}
+							}
+						}
+					],
+					xaxis: {
+						axisTicks: {
+							show: true
+						},
+						axisBorder: {
+							show: true,
+							color: '#FFFFFF'
+						},
+						labels: {
+							show: false
+						}
+					}
+				}}
+			/>
+		</div>
 	</header>
 
 	<main>

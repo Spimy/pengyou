@@ -1,4 +1,4 @@
-import { MONGO_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import mongoose from 'mongoose';
 /* 
   0 - disconnected
@@ -26,7 +26,7 @@ export const dbConnect = async () => {
 
 		await mongoose.disconnect();
 	}
-	await mongoose.connect(MONGO_URL ?? '');
+	await mongoose.connect(env.MONGO_URL ?? '');
 	mongoConnection.isConnected = 1;
 	console.log('Connected to MongoDB');
 };

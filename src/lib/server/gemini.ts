@@ -1,4 +1,4 @@
-import { GEMINI_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import {
 	GoogleGenerativeAI,
 	HarmBlockThreshold,
@@ -34,7 +34,7 @@ const safetySettings: SafetySetting[] = [
 	}
 ];
 
-export const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+export const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 
 // The Gemini 1.5 models are versatile and work with most use cases
 export const jsonModel = genAI.getGenerativeModel({

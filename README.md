@@ -97,7 +97,21 @@ You can then reverse proxy into the built project using a web server such as [NG
 
 ### Docker
 
-WIP
+To avoid dependency and build issues, the project has been dockerized.
+
+This automatically sets the adapter to use node adapter for SvelteKit.
+
+This will set up a local MongoDB server and have the SvelteKit app connect to it. If the MongoDB server fails to start, the SvelteKit app will not start. You do not need to set the MongoDB URL in your `.env` file.
+
+Be sure to have docker installed on your machine first:
+
+```bash
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+1. Build the image: `docker compose build`.
+2. Then run the image in a container: `docker compose up`.
 
 ## Acknowledgments
 

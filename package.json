@@ -1,5 +1,5 @@
 {
-	"name": "test",
+	"name": "pengyou",
 	"version": "0.0.1",
 	"private": true,
 	"engines": {
@@ -17,6 +17,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/adapter-node": "^5.0.1",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "^8.56.7",
@@ -44,6 +45,7 @@
 		"@lucia-auth/adapter-mongodb": "^1.0.3",
 		"@node-rs/argon2": "^1.8.3",
 		"apexcharts": "^3.49.1",
+		"dotenv": "^16.4.5",
 		"mongoose": "^8.4.1",
 		"oslo": "^1.2.0"
 	}

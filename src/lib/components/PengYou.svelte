@@ -1,3 +1,7 @@
+<script lang="ts">
+	export let skinSrc = '/sprites/penguin-default.png';
+</script>
+
 <svelte:head>
 	<script lang="ts">
 		// please don't change these code idk man
@@ -93,6 +97,7 @@
 	<div
 		class="pengyou-sad pengyou-angry pengyou-love pengyou-depress pengyou-faint pengyou-eat-fish pengyou-eat-ice pengyou-spoon pengyou-walk"
 		id="pengyou"
+		style="background:url({skinSrc})"
 	></div>
 </section>
 
@@ -103,14 +108,15 @@
 		background-size: contain;
 		background-position: bottom;
 	}
+
 	#pengyou {
 		--_size: 500px;
+		--_x-pos: calc(var(--_size) - 100px);
 		position: absolute;
 		bottom: 0;
 		width: calc(var(--_size) - 300px);
 		height: calc(var(--_size) - 300px);
-		background: url(/sprites/penguin-default.png);
-		background-size: calc(var(--_size) * 2);
+		background-size: calc(var(--_size) * 2.2) !important;
 	}
 
 	.pengyou-spoon {
@@ -154,57 +160,55 @@
 
 	@keyframes sad {
 		0% {
-			background-position: calc(var(--_size) - 300px * -1) 825px;
+			background-position: calc(var(--_size) - var(--_x-pos) * -1) 900px;
 		}
 		49% {
-			background-position: calc(var(--_size) - 300px * -1) 825px;
+			background-position: calc(var(--_size) - var(--_x-pos) * -1) 900px;
 		}
 		50% {
-			background-position: 0px 825px;
+			background-position: 0px 900px;
 		}
 		100% {
-			background-position: 0px 825px;
+			background-position: 0px 900px;
 		}
 	}
 
 	@keyframes angry {
 		0% {
-			background-position: calc(var(--_size) - 300px * -1) 1025px;
+			background-position: calc(var(--_size) - var(--_x-pos) * -1) 1110px;
 		}
 		49% {
-			background-position: calc(var(--_size) - 300px * -1) 1025px;
+			background-position: calc(var(--_size) - var(--_x-pos) * -1) 1110px;
 		}
 		50% {
-			background-position: 0px 1025px;
+			background-position: 0px 1110px;
 		}
 		100% {
-			background-position: 0px 1025px;
+			background-position: 0px 1110px;
 		}
 	}
 
 	@keyframes love {
 		0% {
-			background-position: calc(var(--_size) - 300px * -1) 0px;
+			background-position: calc(var(--_size) - var(--_x-pos) * -1) 0px;
 		}
 		49% {
-			background-position: calc(var(--_size) - 300px * -1) 0px;
+			background-position: calc(var(--_size) - var(--_x-pos) * -1) 0px;
 		}
 		50% {
-			height: 180px;
-			background-position: 0px 200px;
+			background-position: 0px 230px;
 		}
 		100% {
-			height: 180px;
-			background-position: 0px 200px;
+			background-position: 0px 230px;
 		}
 	}
 
 	@keyframes walkFrames {
 		0% {
-			background-position: calc(var(--_size) - 300px * -1) 225px;
+			background-position: calc(var(--_size) - 400px * -1) 225px;
 		}
 		49% {
-			background-position: calc(var(--_size) - 300px * -1) 225px;
+			background-position: calc(var(--_size) - 400px * -1) 225px;
 		}
 		50% {
 			background-position: 0px 225px;
@@ -243,37 +247,37 @@
 			transform: scaleX(-1);
 			left: 0%;
 		}
-		60%{
+		60% {
 			transform: scaleX(-1);
 			left: -20%;
 		}
-		61%{
+		61% {
 			transform: scaleX(1);
 			left: -20%;
 		}
-		70%{
+		70% {
 			transform: scaleX(1);
-			left:-15%;
+			left: -15%;
 		}
-		80%{
+		80% {
 			transform: scaleX(1);
-			left:15%;
+			left: 15%;
 		}
-		81%{
+		81% {
 			transform: scaleX(-1);
-			left:15%;
+			left: 15%;
 		}
-		90%{
+		90% {
 			transform: scaleX(-1);
-			left:10%;
+			left: 10%;
 		}
-		99%{
+		99% {
 			transform: scaleX(-1);
-			left:0%;
+			left: 0%;
 		}
-		100%{
+		100% {
 			transform: scaleX(1);
-			left:0%;
+			left: 0%;
 		}
 	}
 
@@ -300,63 +304,63 @@
 
 	@keyframes depress {
 		0% {
-			background-position: calc(var(--_size) - 300px * -1) 600px;
+			background-position: calc(var(--_size) - var(--_x-pos) * -1) 670px;
 		}
 		49% {
-			background-position: calc(var(--_size) - 300px * -1) 600px;
+			background-position: calc(var(--_size) - var(--_x-pos) * -1) 670px;
 		}
 		50% {
-			background-position: 0px 600px;
+			background-position: 15px 670px;
 		}
 		100% {
-			background-position: 0px 600px;
+			background-position: 15px 670px;
 		}
 	}
 
 	@keyframes faint {
 		0% {
 			height: 175px;
-			background-position: calc(var(--_size) - 300px * -1) 405px;
+			background-position: calc(var(--_size) - var(--_x-pos) * -1) 430px;
 		}
 		49% {
 			height: 175px;
-			background-position: calc(var(--_size) - 300px * -1) 405px;
+			background-position: calc(var(--_size) - var(--_x-pos) * -1) 430px;
 		}
 		50% {
 			height: 175px;
-			background-position: 0px 405px;
+			background-position: calc(var(--_size) - var(--_x-pos) + 300px * -1) 430px;
 		}
 		100% {
 			height: 175px;
-			background-position: 0px 405px;
+			background-position: calc(var(--_size) - var(--_x-pos) + 300px * -1) 430px;
 		}
 	}
 	@keyframes eat-fish {
 		0% {
-			background-position: 600px 1015px;
+			background-position: 1300px 1100px;
 		}
 		49% {
-			background-position: 600px 1015px;
+			background-position: 1300px 1100px;
 		}
 		50% {
-			background-position: 1200px 1015px;
+			background-position: 1520px 1100px;
 		}
 		100% {
-			background-position: 1200px 1015px;
+			background-position: 1520px 1100px;
 		}
 	}
 	@keyframes eat-ice {
 		0% {
-			background-position: 600px 820px;
+			background-position: 1300px 880px;
 		}
 		49% {
-			background-position: 600px 820px;
+			background-position: 1300px 880px;
 		}
 		50% {
-			background-position: 1200px 820px;
+			background-position: 1520px 880px;
 		}
 		100% {
-			background-position: 1200px 820px;
+			background-position: 1520px 880px;
 		}
 	}
 </style>

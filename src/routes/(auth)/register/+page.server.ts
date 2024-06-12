@@ -56,7 +56,10 @@ export const actions = {
 				currency: 'MYR',
 				inventory: {
 					foods: [],
-					items: [{ id: 'golden-spoon', amount: 1 }],
+					items: [
+						{ id: 'default', amount: 1 },
+						{ id: 'golden-spoon', amount: 1 }
+					],
 					backgrounds: [{ id: 'snowy', amount: 1 }]
 				}
 			});

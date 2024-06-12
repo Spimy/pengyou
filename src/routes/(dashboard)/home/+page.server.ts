@@ -16,7 +16,7 @@ async function fileToGenerativePart(file: File) {
 	};
 }
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals, cookies }) => {
 	const user = locals.user!;
 
 	// Use past week transactions to generate tips
@@ -91,15 +91,16 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const inventory = { foods, items, backgrounds };
 
 	const transactionz = await Transaction.find({ userId: user.id }).lean().exec();
-
 	const daily = await Daily.findOne({ userId: user.id }).lean().exec();
+	const skin = cookies.get('skin') ?? 'penguin-default';
 
 	return {
 		user,
 		tip,
 		inventory,
 		daily: daily ? { ...daily, _id: daily._id.toHexString() } : undefined,
-		transactions: transactionz.map((t) => ({ ...t, _id: t._id.toHexString() }))
+		transactions: transactionz.map((t) => ({ ...t, _id: t._id.toHexString() })),
+		skin
 	};
 };
 
@@ -144,7 +145,7 @@ export const actions = {
 
 		return redirect(302, redirectTo!);
 	},
-	inventory: async ({ locals, url }) => {
+	inventory: async ({ locals, url, cookies }) => {
 		const user = locals.user!;
 
 		const itemId = url.searchParams.get('item') as string;
@@ -155,15 +156,23 @@ export const actions = {
 		const penguin = (await Penguin.findOne({ ownerId: user.id }).exec())!;
 
 		const index = newUser.inventory[itemType].findIndex((f) => f.id === itemId);
+
+		if (itemType === 'items') {
+			cookies.set('skin', `penguin-${itemId}`, {
+				path: '/',
+				maxAge: 60 * 60 * 24 * 365,
+				secure: false
+			});
+		}
+
 		if (index < 0 || newUser.inventory[itemType][index].amount <= 0)
 			return fail(400, { message: 'You do not have this item.' });
 
 		penguin.happiness += storeItem.happinessRefill;
 		penguin.hunger -= storeItem.hungerRefill;
-		newUser.inventory[itemType][index].amount -= 1;
+		if (!storeItem.permanent) newUser.inventory[itemType][index].amount -= 1;
 
 		await newUser.updateOne({ inventory: newUser.inventory }).exec();
-
 		await penguin.save();
 
 		if (itemType === 'foods') {

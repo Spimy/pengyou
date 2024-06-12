@@ -31,7 +31,8 @@ export const storeItems = {
 			cost: 20,
 			hungerRefill: 10,
 			happinessRefill: 0,
-			img: '/items/item-fish.png'
+			img: '/items/item-fish.png',
+			permanent: false
 		},
 		{
 			id: 'ice-cream',
@@ -39,17 +40,28 @@ export const storeItems = {
 			cost: 20,
 			hungerRefill: 5,
 			happinessRefill: 0,
-			img: '/items/item-ice.png'
+			img: '/items/item-ice.png',
+			permanent: false
 		}
 	],
 	items: [
+		{
+			id: 'default',
+			name: 'Default Skin',
+			cost: 0,
+			hungerRefill: 0,
+			happinessRefill: 0,
+			img: '/casual-penguin.png',
+			permanent: true
+		},
 		{
 			id: 'golden-spoon',
 			name: 'Golden Spoon',
 			cost: 0,
 			hungerRefill: 0,
 			happinessRefill: 15,
-			img: '/items/spoon.png'
+			img: '/items/item-spoon.png',
+			permanent: true
 		}
 	],
 	backgrounds: [
@@ -59,7 +71,8 @@ export const storeItems = {
 			cost: 0,
 			hungerRefill: 0,
 			happinessRefill: 0,
-			img: '/items/item-defaultback.png'
+			img: '/items/item-defaultback.png',
+			permanent: true
 		},
 		{
 			id: 'beach',
@@ -67,7 +80,8 @@ export const storeItems = {
 			cost: 160,
 			hungerRefill: 0,
 			happinessRefill: 0,
-			img: '/items/item-beachback.png'
+			img: '/items/item-beachback.png',
+			permanent: true
 		}
 	]
 };

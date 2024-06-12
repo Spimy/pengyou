@@ -53,7 +53,7 @@
 </script>
 
 <div class="relative">
-	<PengYou />
+	<PengYou skinSrc="/sprites/{data.skin}.png" />
 
 	<div
 		class="absolute top-20 left-2/4 w-80 md:w-fit -translate-x-2/4 bg-white p-5 rounded-3xl shadow-[-8px_8px_0px_-1px_rgba(5,76,214,25%)]"
@@ -101,8 +101,21 @@
 						formaction="?/inventory&item={food.id}&type=foods"
 					>
 						<img src={food.img} class="w-[80px] mx-auto mt-5" alt="" />
-
 						<p class="text-xs text-center px-4 mt-5 mx-auto">{food.name} x{food.amount}</p>
+					</button>
+				{/each}
+			</div>
+		</section>
+		<section>
+			<h1 class="text-white text-center font-bold text-2xl mt-4">Food</h1>
+			<div class="flex flex-row max-w-screen rounded-xl p-10 text-slate-200">
+				{#each data.inventory.items as item}
+					<button
+						class="flex m-2 h-[10rem] w-[8rem] flex-col bg-brack rounded-3xl"
+						formaction="?/inventory&item={item.id}&type=items"
+					>
+						<img src={item.img} class="w-[80px] mx-auto mt-5" alt="" />
+						<p class="text-xs text-center px-4 mt-5 mx-auto">{item.name} x{item.amount}</p>
 					</button>
 				{/each}
 			</div>

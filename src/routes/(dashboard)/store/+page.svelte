@@ -24,11 +24,11 @@
 </Modal>
 
 <form
-	class="pt-20 mb-20 flex min-h-screen min-w-fit items-center justify-center bg-gradient-to-b from-sky-300 to-white-300 px-1.5"
+	class="flex min-h-screen items-center justify-center bg-gradient-to-b from-sky-300 to-white-300 px-1.5"
 	method="POST"
 	use:enhance={customEnhance}
 >
-	<div class="flex max-w-screen flex-col rounded-xl bg-brack p-10 text-slate-200">
+	<div class="mt-20 md:mt-0 min-w-full flex flex-col rounded-xl bg-brack p-10 text-slate-200">
 		<h1 class="text-center font-bold text-4xl">PengYou Store</h1>
 		<img
 			class="w-32 h-32 mx-auto mt-4 mb-6 object-contain"

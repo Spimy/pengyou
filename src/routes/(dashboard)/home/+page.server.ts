@@ -7,7 +7,7 @@ import { PENGUCOINS_PER_COMMISSION, storeItems } from '$lib/utils';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals, cookies }) => {
+export const load: PageServerLoad = async ({ locals }) => {
 	const user = locals.user!;
 
 	// Use past week transactions to generate tips
@@ -97,7 +97,7 @@ export const load: PageServerLoad = async ({ locals, cookies }) => {
 };
 
 export const actions = {
-	inventory: async ({ locals, url, cookies }) => {
+	inventory: async ({ locals, url }) => {
 		const user = locals.user!;
 
 		const itemId = url.searchParams.get('item') as string;

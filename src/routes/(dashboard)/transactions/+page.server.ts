@@ -1,9 +1,10 @@
-import { User } from '$lib/server/database/schema/auth';
+import { User as UserDoc } from '$lib/server/database/schema/auth';
 import { Daily } from '$lib/server/database/schema/dailies';
 import { Transaction } from '$lib/server/database/schema/transactions';
 import { jsonModel } from '$lib/server/gemini';
 import { ITransactionType, PENGUCOINS_PER_COMMISSION } from '$lib/utils';
 import { fail, redirect } from '@sveltejs/kit';
+import type { User } from 'lucia';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -22,6 +23,20 @@ async function fileToGenerativePart(file: File) {
 			mimeType: file.type
 		}
 	};
+}
+
+async function updateDailyTransaction(user: User) {
+	// Add PenguCoins to user as daily commission
+	const daily = await Daily.findOne({ userId: user.id }).exec();
+	if (!daily || daily.addedTransaction) return { message: 'Added transaction' };
+
+	daily.addedTransaction = true;
+	await daily.save();
+
+	await UserDoc.updateOne(
+		{ _id: user.id },
+		{ penguCoins: user.penguCoins + PENGUCOINS_PER_COMMISSION }
+	);
 }
 
 export const actions = {
@@ -59,18 +74,7 @@ export const actions = {
 			userId: user.id
 		});
 
-		// Add PenguCoins to user as daily commission
-		const daily = await Daily.findOne({ userId: user.id }).exec();
-		if (!daily || daily.addedTransaction) return { message: 'Added transaction' };
-
-		daily.addedTransaction = true;
-		await daily.save();
-
-		await User.updateOne(
-			{ _id: user.id },
-			{ penguCoins: user.penguCoins + PENGUCOINS_PER_COMMISSION }
-		);
-
+		await updateDailyTransaction(user);
 		return { message: 'Added transaction' };
 	},
 	ocr: async ({ locals, request, url }) => {
@@ -111,6 +115,7 @@ export const actions = {
 			return fail(500, { message: 'Rate limited. Please try again.' });
 		}
 
+		await updateDailyTransaction(user);
 		return redirect(302, redirectTo!);
 	}
 } satisfies Actions;

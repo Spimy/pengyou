@@ -6,15 +6,6 @@ import { ITransactionType, PENGUCOINS_PER_COMMISSION } from '$lib/utils';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-async function fileToGenerativePart(file: File) {
-	return {
-		inlineData: {
-			data: Buffer.from(await file.arrayBuffer()).toString('base64'),
-			mimeType: file.type
-		}
-	};
-}
-
 export const load: PageServerLoad = async ({ locals }) => {
 	const user = locals.user!;
 	const transactions = await Transaction.find({ userId: user.id })

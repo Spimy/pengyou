@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import Chart from '$lib/components/Chart.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import PengYou from '$lib/components/PengYou.svelte';
-	import TransactionChart from '$lib/components/TransactionChart.svelte';
 	import TypeOfExpenses from '$lib/components/TypeOfExpenses.svelte';
+	import { ITransactionType } from '$lib/utils.js';
 	import type { SubmitFunction } from './$types.js';
 
 	export let data;
@@ -50,6 +51,24 @@
 			return update({ reset: true });
 		};
 	};
+
+	const transactions = data.transactions
+		.map((t) => ({
+			x: t.title,
+			y: t.transactionType === ITransactionType.EXPENSE ? -t.amount : 0
+		}))
+		.reduce(
+			(acc, cur, i) => {
+				return [
+					...acc,
+					{
+						x: cur.x,
+						y: acc[i].y + cur.y
+					}
+				];
+			},
+			[{ x: 'Budget', y: data.user.monthlyBudget }]
+		);
 </script>
 
 <div class="relative">
@@ -220,59 +239,130 @@
 </Modal>
 
 <div class="bg-brack p-4 pb-28 rounded-t-3xl space-y-2 min-h-[60vh]">
-	<h1 class="text-primary text-2xl">Dashboard</h1>
+	<h1
+		class="bg-gradient-to-b bg-clip-text text-transparent from-white to-primary text-2xl font-bold"
+	>
+		Dashboard
+	</h1>
 	<div>
-		<div class="glassEffect text-white">Budget this month</div>
-		<TransactionChart transactions={data.transactions}></TransactionChart>
+		<div class="text-white mx-auto mb-4 w-fit">
+			<h2 class="font-bold text-center text-xl">Budget this month:</h2>
+
+			<p class="text-3xl md:text-5xl font-bold flex items-center justify-center">
+				<span class="text-xl">{data.user.currency}&nbsp;</span>
+				{transactions.at(-1)?.y.toFixed(2)}/{data.user.monthlyBudget.toFixed(2)}
+			</p>
+
+			<div class="flex items-center gap-4 mt-4 w-full">
+				<span>0</span>
+				<meter
+					class="rounded-full w-full bg-gradient-to-r from-white to-white"
+					value={data.user.monthlyBudget - (transactions.at(-1)?.y ?? 0)}
+					min="0"
+					max={data.user.monthlyBudget}
+					title="Budget used"
+				/>
+				<span>{data.user.monthlyBudget}</span>
+			</div>
+		</div>
+		<Chart
+			options={{
+				chart: { type: 'line' },
+				colors: ['#00FFFF'],
+				series: [{ data: transactions }],
+				yaxis: [
+					{
+						axisTicks: {
+							show: true
+						},
+						axisBorder: {
+							show: true,
+							color: '#FFFFFF'
+						},
+						labels: {
+							style: {
+								colors: '#FFFFFF'
+							}
+						},
+						title: {
+							text: 'Budget',
+							style: {
+								color: '#FFFFFF'
+							}
+						}
+					}
+				],
+				xaxis: {
+					axisTicks: {
+						show: true
+					},
+					axisBorder: {
+						show: true,
+						color: '#FFFFFF'
+					},
+					labels: {
+						style: {
+							colors: '#FFFFFF'
+						}
+					}
+				}
+			}}
+		/>
 	</div>
 	<h1 class="text-primary text-2xl">Missions</h1>
 	<div class="flex flex-col">
-		{#if data.daily}
-			<div class="flex flex-row py-2">
+		<div class="flex flex-row py-2">
+			{#if data.daily}
 				<p class="px-4 text-emerald-400">✓</p>
-				<p class="px-4 text-white">Log in today</p>
-			</div>
-		{:else}
-			<div class="flex flex-row py-2">
+			{:else}
 				<p class="px-4 text-red-400">x</p>
-				<p class="px-4 text-white">Log in today</p>
-			</div>
-		{/if}
+			{/if}
+			<p class="px-4 text-white">
+				Log in today <span class="text-green-400 text-xs">+20 PenguCoins</span>
+			</p>
+		</div>
 
-		{#if data.daily?.addedTransaction}
-			<div class="flex flex-row py-2">
+		<div class="flex flex-row py-2">
+			{#if data.daily?.addedTransaction}
 				<p class="px-4 text-emerald-400">✓</p>
-				<p class="px-4 text-white">Add a transaction</p>
-			</div>
-		{:else}
-			<div class="flex flex-row py-2">
+			{:else}
 				<p class="px-4 text-red-400">x</p>
-				<p class="px-4 text-white">Add a transaction</p>
-			</div>
-		{/if}
+			{/if}
+			<p class="px-4 text-white">
+				Add a transaction <span class="text-green-400 text-xs">+20 PenguCoins</span>
+			</p>
+		</div>
 
-		{#if data.daily?.fedPengyou}
-			<div class="flex flex-row py-2">
+		<div class="flex flex-row py-2">
+			{#if data.daily?.fedPengyou}
 				<p class="px-4 text-emerald-400">✓</p>
-				<p class="px-4 text-white">Feed PengYou</p>
-			</div>
-		{:else}
-			<div class="flex flex-row py-2">
+			{:else}
 				<p class="px-4 text-red-400">x</p>
-				<p class="px-4 text-white">Feed PengYou</p>
-			</div>
-		{/if}
+			{/if}
+			<p class="px-4 text-white">
+				Feed PengYou <span class="text-green-400 text-xs">+20 PenguCoins</span>
+			</p>
+		</div>
 
-		{#if data.daily?.readAiTip}
-			<div class="flex flex-row py-2">
+		<div class="flex flex-row py-2">
+			{#if data.daily?.readAiTip}
 				<p class="px-4 text-emerald-400">✓</p>
-				<p class="px-4 text-white">Read a tip from PengYou</p>
-			</div>
-		{:else}
-			<div class="flex flex-row py-2">
+			{:else}
 				<p class="px-4 text-red-400">x</p>
-				<p class="px-4 text-white">Read a tip from PengYou</p>
-			</div>
-		{/if}
+			{/if}
+			<p class="px-4 text-white">
+				Read a tip from PengYou <span class="text-green-400 text-xs">+20 PenguCoins</span>
+			</p>
+		</div>
 	</div>
 </div>
+
+<style>
+	meter::-webkit-meter-optimum-value {
+		background: #3ec9ff;
+	}
+	meter::-moz-meter-bar {
+		/* Firefox Pseudo Class */
+		background: #3ec9ff;
+	}
+</style>

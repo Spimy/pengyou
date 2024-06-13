@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts"> 
 	let displayCurrency: String = 'MYR';
 </script>
 

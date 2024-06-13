@@ -17,7 +17,7 @@
 	<label
 		for="displayIncome"
 		class="text-primary peer-checked/income:text-white peer-checked/income:bg-primary rounded-3xl p-2 cursor-pointer"
-	>
+	> 
 		INCOME
 	</label>
 

@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"engines": {
-		"node": "20.18.1"
+		"node": ">=20.18.1"
 	},
 	"packageManager": "pnpm@9.2.0",
 	"scripts": {
@@ -44,6 +44,7 @@
 		"@google/generative-ai": "^0.12.0",
 		"@lucia-auth/adapter-mongodb": "^1.0.3",
 		"@node-rs/argon2": "^1.8.3",
+		"@sveltejs/adapter-vercel": "^5.5.2",
 		"apexcharts": "^3.49.1",
 		"dotenv": "^16.4.5",
 		"mongoose": "^8.4.1",
